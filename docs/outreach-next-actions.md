@@ -45,6 +45,7 @@ python3 scripts/send_outreach.py \
 
 現在確認済み:
 
+- NS: `ns-rs1.gmoserver.jp`, `ns-rs2.gmoserver.jp`
 - SPF: `v=spf1 include:_spf.onamae.ne.jp ~all`
 - MX: `10 mail1044.onamae.ne.jp.`
 - DKIM: `default._domainkey.koetech.jp` に `v=DKIM1; k=rsa; p=...` が存在
