@@ -7,6 +7,7 @@
 - 大量再送はしない。まず10件だけ短文追客する。
 - 追客メールは「打ち合わせ予約」ではなく「実データ版を1枚作ってよいか」のYes/Noにする。
 - URLにはUTMを付与し、少なくともキャンペーン別・宛先別に識別できる状態にする。
+- 実クリックログが必要な配信では `tracking/` のVercelリダイレクトを使う。
 - 宛先CSV、送信ログ、送信者情報は `data/.gitignore` の対象として公開しない。
 
 ## 追客バッチ生成
@@ -15,9 +16,39 @@
 python3 scripts/build_followup_batch.py --limit 10 --campaign followup_20260702
 ```
 
+Vercelのクリック計測を使う場合:
+
+```sh
+python3 scripts/build_followup_batch.py \
+  --limit 10 \
+  --campaign followup_20260702 \
+  --tracking-base https://tracking-nine-lovat.vercel.app
+```
+
 生成物:
 
 - `data/followup_20260702.csv`
+
+## クリック計測
+
+```sh
+npx vercel@latest --prod --yes tracking
+```
+
+`tracking/api/click.js` はクリックごとにVercel FunctionログへJSONを出力し、
+許可済みのGitHub Pages URLへ302リダイレクトする。
+
+本番URL:
+
+```txt
+https://tracking-nine-lovat.vercel.app
+```
+
+ログ確認:
+
+```sh
+npx vercel@latest logs tracking-nine-lovat.vercel.app --since 24h
+```
 
 送信前プレビュー:
 

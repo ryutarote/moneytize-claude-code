@@ -91,7 +91,7 @@ def score_row(row):
     return score
 
 
-def tracking_url(base, campaign, slug):
+def tracking_url(base, campaign, slug, tracking_base=""):
     parsed = urllib.parse.urlsplit(base)
     params = dict(urllib.parse.parse_qsl(parsed.query, keep_blank_values=True))
     params.update({
@@ -100,13 +100,22 @@ def tracking_url(base, campaign, slug):
         "utm_campaign": campaign,
         "utm_content": slug,
     })
-    return urllib.parse.urlunsplit(parsed._replace(query=urllib.parse.urlencode(params)))
+    target = urllib.parse.urlunsplit(parsed._replace(query=urllib.parse.urlencode(params)))
+    tracking_base = tracking_base.rstrip("/")
+    if not tracking_base:
+        return target
+    return (
+        f"{tracking_base}/c?"
+        + urllib.parse.urlencode({"c": campaign, "s": slug, "u": target})
+    )
 
 
 def main():
     ap = argparse.ArgumentParser(description="追客メールの少数バッチを生成")
     ap.add_argument("--limit", type=int, default=10)
     ap.add_argument("--campaign", default="followup_20260702")
+    ap.add_argument("--tracking-base", default=os.environ.get("OUTREACH_TRACKING_BASE", ""),
+                    help="クリック計測リダイレクトのベースURL（例: https://x.vercel.app）")
     ap.add_argument("--out", default=os.path.join(ROOT, "data", "followup_20260702.csv"))
     ap.add_argument("--recipients", default=RECIPIENTS)
     ap.add_argument("--sent-log", default=SENT_LOG)
@@ -122,7 +131,7 @@ def main():
         if not email or email in bounces or slug not in sent:
             continue
         item = {k: r.get(k, "") for k in ("slug", "shop_name", "area_genre", "demo_url", "email", "notes")}
-        item["tracked_demo_url"] = tracking_url(item["demo_url"], args.campaign, slug)
+        item["tracked_demo_url"] = tracking_url(item["demo_url"], args.campaign, slug, args.tracking_base)
         item["first_sent_at"] = sent[slug]["first"]
         item["last_sent_at"] = sent[slug]["last"]
         item["sent_count"] = str(sent[slug]["count"])
