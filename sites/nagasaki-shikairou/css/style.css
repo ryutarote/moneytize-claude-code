@@ -38,7 +38,8 @@
   --muted: hsl(var(--muted-foreground));
   --line: hsl(var(--border));
   --shadow: 0 10px 30px rgba(20,60,80,0.14);
-  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --serif: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;  /* ver.3 看板 identity: 見出しはゴシック */
+  --mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Shippori Mincho", serif;
   --sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
 }
 
@@ -692,3 +693,8 @@ body.no-scroll { overflow: hidden; }
 .banner-card .banner-title { font-weight: 700; font-size: 1.02rem; line-height: 1.3; }
 .banner-card .banner-sub { font-weight: 400; font-size: .78rem; line-height: 1.4;
    color: hsl(var(--muted-foreground)); }
+
+
+/* --- ver.3 看板 identity: ゴシック見出し(看板) × 明朝アクセント --- */
+.hero-lead { font-family: var(--mincho); }
+.hero-title, .section-title { font-weight: 800; letter-spacing: .01em; }
