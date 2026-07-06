@@ -137,8 +137,8 @@ def page_html(p, css):
     hl_cards = "\n".join(
         f'''      <div class="ds-hl"><div class="ic">{ic}</div><h3>{esc(t)}</h3><p>{esc(d)}</p></div>'''
         for ic, t, d in highlights)
-    bar_left = (f'<a class="ds-btn ds-btn--line" style="background:var(--surface)" href="tel:{esc(phone)}">☎ お電話</a>'
-                if phone else f'<a class="ds-btn ds-btn--line" style="background:var(--surface)" href="mailto:{SENDER_MAIL}">メール</a>')
+    bar_left = (f'<a class="ds-btn ds-btn--line" href="tel:{esc(phone)}">☎ お電話</a>'
+                if phone else f'<a class="ds-btn ds-btn--line" href="mailto:{SENDER_MAIL}">メール</a>')
     aux_tel = f'　/　<a href="tel:{esc(phone)}">☎ {esc(phone)}</a>' if phone else ''
 
     return f'''<!doctype html>
@@ -168,13 +168,14 @@ def page_html(p, css):
 </div></header>
 
 <section class="ds-hero"><div class="wrap">
+  <span class="ds-tate" aria-hidden="true">{esc(area)}　{esc(glabel)}</span>
   <div class="mark">{emoji}</div>
   <span class="eyebrow">{esc(area)} ／ {esc(glabel)}</span>
   <h1>{esc(name)}</h1>
   <p class="lead">{esc(tagline)}<br>{esc(concept)}</p>
   <div class="actions">
     <a class="ds-btn ds-btn--fill" href="#contact">ご予約・お問い合わせ</a>
-    <a class="ds-btn ds-btn--line" href="#menu">お品書きを見る</a>
+    <a class="ds-btn ds-btn--ghost" href="#menu">お品書きを見る</a>
   </div>
 </div></section>
 
@@ -185,7 +186,7 @@ def page_html(p, css):
 </div></div>
 
 <section class="ds-section" id="reasons"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">01</span><span class="ds-label">Why us</span></div>
+  <div class="ds-head"><span class="ds-index">選</span><span class="ds-label">Why us</span></div>
   <h2 class="ds-h2" style="margin-bottom:.7em">選ばれる理由</h2>
   <div class="ds-highlights">
 {hl_cards}
@@ -193,13 +194,13 @@ def page_html(p, css):
 </div></section>
 
 <section class="ds-section ds-section--alt" id="concept"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">02</span><span class="ds-label">Concept</span></div>
+  <div class="ds-head"><span class="ds-index">味</span><span class="ds-label">Concept</span></div>
   <h2 class="ds-h2" style="margin-bottom:.5em">こだわり</h2>
   <p class="ds-lead-text">{esc(concept)}<br><span style="color:var(--muted);font-size:14px">※本デモの紹介文はジャンルに合わせた構成サンプルです。実制作では貴店の歴史・看板メニュー・写真を反映します。</span></p>
 </div></section>
 
 <section class="ds-section" id="menu"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">03</span><span class="ds-label">Menu</span></div>
+  <div class="ds-head"><span class="ds-index">品</span><span class="ds-label">Menu</span></div>
   <h2 class="ds-h2" style="margin-bottom:.6em">お品書き</h2>
   <div class="ds-menu">
 {menu_items}
@@ -208,7 +209,7 @@ def page_html(p, css):
 </div></section>
 
 <section class="ds-section ds-section--alt" id="access"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">04</span><span class="ds-label">Access</span></div>
+  <div class="ds-head"><span class="ds-index">席</span><span class="ds-label">Access</span></div>
   <h2 class="ds-h2" style="margin-bottom:.7em">アクセス・ご利用案内</h2>
   <div class="ds-access">
     <div class="ds-info">
@@ -313,15 +314,18 @@ def photo_for_genre(genre):
 def landing_css(accent, accent_ink, photo):
     return f'''
 :root {{
-  --ink: #171717;
-  --muted: #66615b;
-  --line: #e8e1d8;
-  --paper: #fbfaf7;
+  --ink: #15120e;
+  --muted: #6f685e;
+  --line: #e7e1d7;
+  --paper: #f5f3ef;
   --panel: #ffffff;
+  --sumi: #141210;
   --accent: {accent};
   --accent-ink: {accent_ink};
   --accent-soft: color-mix(in srgb, {accent} 12%, #ffffff);
-  --shadow: 0 24px 70px rgba(23, 23, 23, .12);
+  --shadow: 0 26px 60px -32px rgba(20, 18, 16, .5);
+  --font-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Times New Roman", serif;
 }}
 * {{ box-sizing: border-box; }}
 html {{ scroll-behavior: smooth; }}
@@ -444,10 +448,11 @@ a {{ color: inherit; text-decoration: none; }}
 h1 {{
   margin: 18px 0 18px;
   max-width: 12em;
-  font-family: Georgia, "Times New Roman", "Hiragino Mincho ProN", serif;
+  font-family: var(--font-gothic);
+  font-weight: 800;
   font-size: clamp(44px, 8vw, 84px);
-  line-height: .98;
-  letter-spacing: 0;
+  line-height: 1.02;
+  letter-spacing: .005em;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }}
@@ -455,8 +460,10 @@ h1 {{
   max-width: 650px;
   margin: 0;
   color: rgba(255,255,255,.88);
-  font-size: clamp(16px, 2.1vw, 21px);
-  font-weight: 600;
+  font-family: var(--font-mincho);
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height: 1.9;
+  font-weight: 500;
 }}
 .hero-actions {{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }}
 .hero-meta {{
@@ -824,10 +831,10 @@ def landing_gallery_html(items):
 <title>プロフェッショナルLP提案デモ集（メール取得済み候補 {len(items)}件）｜{COMPANY}</title>
 <style>
 :root {{
-  --ink: #171717;
-  --muted: #66615b;
-  --line: #e8e1d8;
-  --paper: #fbfaf7;
+  --ink: #15120e;
+  --muted: #6f685e;
+  --line: #e7e1d7;
+  --paper: #f5f3ef;
   --accent: #0f766e;
 }}
 * {{ box-sizing: border-box; }}
@@ -835,8 +842,9 @@ body {{
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: "Inter", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
 }}
+.gallery-card strong {{ font-weight: 800; }}
 a {{ color: inherit; text-decoration: none; }}
 .wrap {{ width: min(1120px, calc(100% - 40px)); margin: 0 auto; }}
 .hero {{
