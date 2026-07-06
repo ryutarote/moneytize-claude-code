@@ -1,19 +1,35 @@
-# web-renewal-studio Design System ver.2 「Editorial Washoku」
+# web-renewal-studio Design System ver.3 「Kanban / 看板」
 
-飲食店リニューアル提案デモ向けの共通デザインシステム。Claude Design（claude.ai/design）で管理。
+飲食店リニューアル提案デモ向けの共通デザインシステム。`frontend-design` スキルの原則で ver.2「Editorial Washoku」から刷新。
 
 ## 思想
-- **明朝の見出し × クリーンなサンセリフ本文** — 料理と店の世界観を引き立てるエディトリアル。
-- **余白とヘアライン**で上質さを出し、装飾は最小限。
-- **ジャンル別アクセント**を1色だけ注入（寿司=藍緑 / ラーメン=朱 / 和食=藍 / カフェ=琥珀 / 居酒屋=紫 …）。各ページは `--accent` `--accent-ink` を上書きするだけで世界観が変わる。
-- スマホ対応・常時SSL・外部依存なしの軽量1ファイル構成（相手の旧サイト改善を体現）。
+夜の店先に立つ体験。**墨黒(sumi)のヒーロー／フッターで明るい本文を挟み**、ジャンル別アクセントを「灯り」として使う。飲食店の看板・暖簾・献立・提灯といった語彙から distinctive な選択を引き出す。
+
+- **太ゴシックの店名 × 明朝のタグライン** — 見出しはゴシック(看板)、タグライン/献立は明朝。定番の「セリフ見出し」を反転。
+- **縦書きの下げ札(tategaki)** をヒーローのシグネチャに（暖簾/木札の見立て・1箇所だけ大胆に）。
+- **装飾番号(01/02/03)を廃止**し、内容を表す**漢字マーカー**（選＝選ばれる理由 / 味＝こだわり / 品＝お品書き / 席＝アクセス）で構造に意味を持たせる。
+- ジャンル別アクセントを1色だけ注入（各ページが `--accent` `--accent-ink` `--accent-wash` を上書き）。
+- **控えめなモーション**（ヒーロー入場のフェードアップ・hoverの浮き）。`prefers-reduced-motion` を尊重。
+- スマホ対応・キーボードフォーカス可視・常時SSL・外部依存なしの軽量1ファイル構成。
+
+※定番の回避: クリーム地×明朝×単色(定番#1)／全面近黒×蛍光(定番#2)／新聞レイアウト(定番#3)を避け、意図的な選択に置き換えた。
+
+## パレット（トークン）
+| 名前 | 用途 | 値 |
+|---|---|---|
+| sumi 墨 | ヒーロー/フッター/CTA帯 | `#141210` |
+| washi 和紙 | 本文の地 | `#f5f3ef` |
+| panel 胡粉 | カード/面 | `#ffffff` |
+| ink 濃墨 | 本文文字 | `#15120e` |
+| nezumi 鼠 | 補助文字 | `#6f685e` |
+| accent | ジャンル別の灯り＝主要アクション | ページ注入 |
 
 ## 構成
-- `site.css` … トークン（color/type/space/radius/shadow）＋全コンポーネントのスタイル。
+- `site.css` … トークン（surface/type/shape）＋全コンポーネントのスタイル（ver.2とクラス名互換）。
 - `components/*.html` … 各コンポーネントのプレビュー（`@dsCard` 付き）。
-  - Foundations: Color & Type
-  - Components: Hero / Buttons / Menu list / Access / CTA band / Gallery card
 
 ## 使い方
-`scripts/gen_prospect_sites.py` が `site.css` をインライン展開し、ジャンル別アクセントを注入して
-各見込み客のデモ（`sites/leads-b3/<slug>/`）を生成する。
+`scripts/gen_prospect_sites.py <prospects.csv> <outdir>` が `site.css` をインライン展開し、
+ジャンル別アクセントを注入して各デモ（`sites/<outdir>/<slug>/`）を生成する。
+`outdir=leads-email` のみ写真ヒーローのLP版（`landing_page_html`）を出力し、同じパレット/タイポに整えている。
+対象バッチ: `leads-b3`(100) / `leads-b4`(50) / `leads-email`(24)。

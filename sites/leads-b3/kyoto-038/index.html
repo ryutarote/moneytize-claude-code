@@ -7,131 +7,335 @@
 <title>Japaneseまぜ麺MARUTA｜リニューアル提案デモ（コエテク合同会社）</title>
 <meta name="description" content="Japaneseまぜ麺MARUTA（京都市・ラーメン・和食・麺料理）のWebサイト リニューアル提案デモ。コエテク合同会社が公開情報をもとに試作したサンプルです。">
 <meta property="og:title" content="Japaneseまぜ麺MARUTA｜リニューアル提案デモ">
-<meta property="og:description" content="スマホ対応・高速表示・予約導線を備えた現代的な構成案（サンプル）。">
+<meta property="og:description" content="スマホ対応・高速表示・予約導線を備えた、現代的な構成案（サンプル）。">
 <style>
-  :root{--accent:#b91c1c;--accent2:#7f1d1d;--bg:#fbfaf8;--fg:#1c1917;--muted:#6b7280;--card:#fff;--line:#ececec}
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;color:var(--fg);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
-  a{color:inherit}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-  .demo-bar{background:#111827;color:#fde68a;font-size:13px;text-align:center;padding:8px 12px}
-  .demo-bar b{color:#fff}
-  header.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
-  .brand{font-weight:700;font-size:18px;letter-spacing:.02em}
-  .brand .b-emoji{margin-right:8px}
-  nav.links{display:flex;gap:22px;font-size:14px}
-  nav.links a{text-decoration:none;color:var(--muted)}
-  nav.links a:hover{color:var(--accent)}
-  .hero{position:relative;color:#fff;padding:84px 0 92px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-  .hero .wrap{position:relative}
-  .hero .emoji{font-size:56px}
-  .hero h1{font-size:clamp(30px,6vw,52px);margin:.2em 0 .15em;line-height:1.15}
-  .hero .sub{font-size:15px;opacity:.92;letter-spacing:.08em}
-  .hero .lead{font-size:clamp(16px,2.6vw,20px);max-width:34em;margin:.8em 0 1.6em;opacity:.96}
-  .cta{display:inline-flex;gap:8px;align-items:center;background:#fff;color:var(--accent2);font-weight:700;padding:13px 22px;border-radius:999px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.15)}
-  .cta.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.7);box-shadow:none}
-  .cta+.cta{margin-left:10px}
-  section{padding:64px 0}
-  h2{font-size:clamp(22px,4vw,30px);margin:0 0 .2em}
-  .eyebrow{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
-  .muted{color:var(--muted)}
-  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:28px}
-  .m-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;transition:transform .15s,box-shadow .15s}
-  .m-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
-  .m-emoji{font-size:30px}
-  .m-card h3{margin:.4em 0 .1em;font-size:17px}
-  .m-price{color:var(--accent);font-weight:700}
-  .note{font-size:13px;margin-top:16px}
-  .access{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
-  .info-row{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-  .info-row .k{width:84px;color:var(--muted);flex:none}
-  .tel{font-weight:700;text-decoration:none;color:var(--accent2)}
-  .mapph{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(135deg,#eef2f4,#e5e9ec);display:flex;align-items:center;justify-content:center;color:#9aa3ab;font-size:14px;border:1px solid var(--line)}
-  .band{background:var(--fg);color:#fff;border-radius:22px;padding:40px;text-align:center}
-  .band h2{color:#fff}
-  .band .cta{margin-top:14px}
-  footer{padding:40px 0 60px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-  footer .disc{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:13px}
-  @media(max-width:720px){.access{grid-template-columns:1fr}nav.links{display:none}section{padding:48px 0}}
+/* =========================================================================
+   web-renewal-studio Design System  ver.3 「Kanban / 看板」
+   飲食店リニューアル提案デモの共通デザイン。夜の店先アプローチ＝墨黒の
+   ヒーロー/フッターで明るい本文を挟み、ジャンル別アクセントを「灯り」として使う。
+   見出しは太ゴシックの店名 × 明朝のタグライン。装飾番号は使わず漢字マーカーで
+   内容を示す。シグネチャはヒーローの縦書き下げ札。
+   ジャンル別アクセントは各ページが --accent / --accent-ink / --accent-wash を注入。
+   ※クラス名は ver.2 と互換（generator / component preview を壊さない）。
+   ========================================================================= */
+
+:root{
+  /* surfaces */
+  --sumi:#141210; --sumi-2:#201b16; --sumi-line:rgba(255,255,255,.12);
+  --paper:#f5f3ef; --panel:#ffffff; --panel-2:#faf7f2;
+  --ink:#15120e; --ink-soft:#4c463e; --muted:#6f685e; --line:#e7e1d7;
+  /* accent — genre injects these three; sensible fallback below */
+  --accent:#0f766e; --accent-ink:#0b5a53; --accent-wash:rgba(15,118,110,.08);
+  /* type — gothic display (店名/signboard) × mincho accent (献立/tagline) */
+  --font-gothic:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
+  --font-mincho:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP","Times New Roman",serif;
+  /* shape */
+  --maxw:1080px; --radius:12px; --radius-lg:16px;
+  --shadow-sm:0 2px 5px rgba(20,18,16,.05);
+  --shadow:0 26px 60px -32px rgba(20,18,16,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-gothic);
+  line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+a:focus-visible,.ds-btn:focus-visible,.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* ---- buttons ---- */
+.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;
+  padding:12px 22px;border-radius:10px;font-family:var(--font-gothic);font-weight:700;font-size:14px;
+  line-height:1;letter-spacing:.02em;border:1px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+.ds-btn--fill{background:var(--accent);color:#fff;box-shadow:0 12px 28px -12px var(--accent)}
+.ds-btn--fill:hover{transform:translateY(-2px);box-shadow:0 18px 36px -14px var(--accent)}
+.ds-btn--ghost{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.42)} /* dark contexts */
+.ds-btn--ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.7)}
+.ds-btn--line{background:var(--panel);color:var(--ink);border-color:var(--line)} /* light contexts */
+.ds-btn--line:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));color:var(--accent-ink)}
+
+/* ---- demo notice strip ---- */
+.ds-demo-bar{background:#0d0b09;color:rgba(255,255,255,.66);font-size:12px;letter-spacing:.01em;
+  text-align:center;padding:8px 16px}
+.ds-demo-bar b{color:#fff;font-weight:700}
+
+/* ---- header (dark signboard) ---- */
+.ds-header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--sumi) 86%,transparent);
+  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--sumi-line)}
+.ds-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.ds-brand{font-family:var(--font-gothic);font-weight:800;font-size:18px;letter-spacing:.02em;color:#fff;
+  display:flex;align-items:center;gap:11px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.ds-brand .mk{flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;
+  font-size:17px;background:color-mix(in srgb,var(--accent) 26%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 46%,transparent)}
+.ds-nav-wrap{display:flex;align-items:center;gap:22px;flex:none}
+.ds-nav{display:flex;gap:22px;font-family:var(--font-gothic);font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
+.ds-nav a{position:relative;padding:4px 0;transition:color .16s}
+.ds-nav a:hover{color:#fff}
+.ds-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;background:var(--accent);transition:right .22s ease}
+.ds-nav a:hover::after{right:0}
+
+/* ---- hero (evening approach: sumi + accent glow, gothic 店名 × mincho tagline) ---- */
+.ds-hero{position:relative;overflow:hidden;background:var(--sumi);color:#fff;
+  padding:clamp(58px,10vh,112px) 0 clamp(96px,13vh,150px)}
+.ds-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(130% 95% at 84% -8%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 58%)}
+.ds-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;
+  background:linear-gradient(0deg,var(--paper),transparent)}
+.ds-hero .wrap{position:relative;z-index:1}
+.ds-hero .mark{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:25px;
+  background:color-mix(in srgb,var(--accent) 20%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);margin-bottom:22px}
+.ds-hero .eyebrow{display:inline-flex;align-items:center;gap:11px;font-family:var(--font-gothic);
+  font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.ds-hero .eyebrow::before{content:"";width:28px;height:2px;background:var(--accent)}
+.ds-hero h1{font-family:var(--font-gothic);font-weight:800;font-size:clamp(40px,7.6vw,88px);line-height:1.03;
+  letter-spacing:.005em;margin:16px 0 20px;color:#fff;text-wrap:balance;overflow-wrap:anywhere;
+  max-width:min(100%,15ch)}
+.ds-hero .lead{font-family:var(--font-mincho);font-size:clamp(16px,2.1vw,21px);line-height:1.95;
+  color:rgba(255,255,255,.82);max-width:min(100%,34em);margin:0 0 30px}
+.ds-hero .actions{display:flex;flex-wrap:wrap;gap:12px}
+/* signature: 縦書き下げ札 (hanging tategaki tag) */
+.ds-tate{position:absolute;top:0;right:clamp(18px,6vw,66px);z-index:1;padding-top:96px;
+  writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--font-mincho);font-size:15px;
+  letter-spacing:.34em;color:rgba(255,255,255,.62)}
+.ds-tate::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:1px;height:76px;background:linear-gradient(180deg,var(--accent),transparent)}
+.ds-tate::after{content:"";position:absolute;top:74px;left:50%;transform:translateX(-50%);
+  width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px 2px var(--accent)}
+
+/* ---- proof strip (sits under hero, on paper) ---- */
+.ds-proof{background:var(--paper);border-bottom:1px solid var(--line)}
+.ds-proof .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 18px;
+  padding:22px 24px;text-align:center}
+.ds-proof .stars{color:var(--accent);letter-spacing:.16em;font-size:15px}
+.ds-proof .quote{font-family:var(--font-mincho);font-size:17px;color:var(--ink)}
+.ds-proof .src{font-size:12px;color:var(--muted)}
+
+/* ---- sections ---- */
+.ds-section{padding:clamp(58px,8vw,104px) 0;background:var(--paper)}
+.ds-section--alt{background:var(--panel-2)}
+.ds-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+/* kanji marker — encodes the section's meaning (選/味/品/席), not a fake sequence */
+.ds-index{flex:none;width:42px;height:42px;display:grid;place-items:center;border-radius:10px;
+  font-family:var(--font-mincho);font-size:20px;font-weight:600;color:var(--accent-ink);
+  background:var(--accent-wash);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line))}
+.ds-label{font-family:var(--font-gothic);font-size:12px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted)}
+.ds-h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(26px,4vw,42px);line-height:1.16;
+  letter-spacing:.01em;color:var(--ink);margin:0;text-wrap:balance;overflow-wrap:anywhere}
+.ds-lead-text{font-family:var(--font-mincho);font-size:clamp(18px,2.3vw,23px);line-height:1.95;
+  color:var(--ink-soft);max-width:34em;margin:0}
+
+/* ---- highlights (選ばれる理由) ---- */
+.ds-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+.ds-hl{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
+  box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease}
+.ds-hl:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.ds-hl .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:23px;
+  background:var(--accent-wash);margin-bottom:16px}
+.ds-hl h3{font-family:var(--font-gothic);font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink)}
+.ds-hl p{margin:0;font-size:14px;color:var(--muted);line-height:1.85}
+
+/* ---- menu (献立: leader-dot list, 人気 badge) ---- */
+.ds-menu{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
+.ds-menu-item{display:flex;align-items:center;gap:13px;padding:17px 22px;border-top:1px solid var(--line)}
+.ds-menu-item:first-child{border-top:0}
+.mi-emoji{flex:none;font-size:20px}
+.mi-name{font-family:var(--font-gothic);font-weight:700;font-size:16px;color:var(--ink)}
+.mi-sub{display:block;font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.02em}
+.mi-dot{flex:1 1 auto;min-width:20px;height:.7em;border-bottom:1px dotted color-mix(in srgb,var(--ink) 24%,transparent)}
+.mi-price{flex:none;font-family:var(--font-mincho);font-size:15px;color:var(--accent-ink)}
+.ds-badge{display:inline-block;margin-left:9px;padding:2px 9px;border-radius:999px;font-family:var(--font-gothic);
+  font-size:11px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--accent);vertical-align:middle}
+.ds-note{font-size:12.5px;color:var(--muted);line-height:1.8;margin-top:18px}
+
+/* ---- access ---- */
+.ds-access{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px}
+.ds-info{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:6px 24px}
+.ds-info .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:15px 0;
+  border-bottom:1px solid var(--line)}
+.ds-info .row:last-child{border-bottom:0}
+.ds-info .k{flex:none;color:var(--muted);font-family:var(--font-gothic);font-size:13px;font-weight:700;letter-spacing:.04em}
+.ds-info .tel,.tel{color:var(--accent-ink);font-weight:700}
+.ds-map{background:var(--accent-wash);border:1px dashed color-mix(in srgb,var(--accent) 34%,var(--line));
+  border-radius:var(--radius);display:grid;place-items:center;min-height:220px;color:var(--muted);font-size:14px}
+
+/* ---- CTA band (sumi, bookends the hero) ---- */
+.ds-cta{position:relative;overflow:hidden;background:var(--sumi);color:#fff;border-radius:var(--radius-lg);
+  padding:clamp(34px,6vw,66px)}
+.ds-cta::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 130% at 100% 0%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 55%)}
+.ds-cta>*{position:relative;z-index:1}
+.ds-cta .ds-label{color:rgba(255,255,255,.6)}
+.ds-cta h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(24px,3.6vw,38px);line-height:1.2;
+  color:#fff;margin:10px 0 14px;text-wrap:balance}
+.ds-cta p{color:rgba(255,255,255,.78);max-width:54em;margin:0}
+.ds-cta .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.ds-reserve-aux{margin-top:18px;font-size:13px;color:rgba(255,255,255,.62)}
+.ds-reserve-aux a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
+
+/* ---- footer (sumi) ---- */
+.ds-footer{background:var(--sumi);color:rgba(255,255,255,.58);padding:40px 0 46px;font-size:12.5px;line-height:1.9}
+.ds-footer .wrap{display:grid;gap:12px}
+.ds-footer .disc{max-width:72em}
+.ds-footer b{color:rgba(255,255,255,.85);font-weight:600}
+.ds-footer a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
+
+/* ---- gallery (index) ---- */
+.ds-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ds-gal a{display:flex;flex-direction:column;gap:7px;padding:26px 24px;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);
+  transition:transform .18s ease,box-shadow .18s ease}
+.ds-gal a:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.ds-gal .em{font-size:26px}
+.ds-gal .nm{font-family:var(--font-gothic);font-weight:800;font-size:18px;line-height:1.35;color:var(--ink)}
+.ds-gal .sb{font-size:13px;color:var(--muted)}
+
+/* ---- sticky mobile action bar ---- */
+.ds-actionbar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;
+  width:min(560px,calc(100% - 24px));display:none;gap:8px;padding:8px;border-radius:14px;
+  background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(14px);
+  border:1px solid var(--line);box-shadow:var(--shadow)}
+.ds-actionbar .ds-btn{flex:1;min-height:48px}
+
+/* ---- motion: restrained hero entrance; hover lifts above; reduced-motion respected ---- */
+@media (prefers-reduced-motion:no-preference){
+  .ds-hero .wrap>*{animation:dsRise .72s cubic-bezier(.2,.7,.2,1) both}
+  .ds-hero .mark{animation-delay:.02s}
+  .ds-hero .eyebrow{animation-delay:.08s}
+  .ds-hero h1{animation-delay:.15s}
+  .ds-hero .lead{animation-delay:.24s}
+  .ds-hero .actions{animation-delay:.32s}
+  @keyframes dsRise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+}
+
+/* ---- responsive ---- */
+@media (max-width:860px){
+  body{overflow-x:hidden;padding-bottom:82px}
+  .wrap{padding:0 18px}
+  .ds-tate{display:none}
+  .ds-header .wrap{height:56px;gap:10px}
+  .ds-nav{display:none}
+  .ds-header .ds-btn{display:none}       /* nav+CTA collapse; actionbar carries conversion */
+  .ds-brand{flex:1;font-size:16px}
+  .ds-hero h1{word-break:break-word}
+  .ds-highlights,.ds-access,.ds-gal{grid-template-columns:1fr}
+  .ds-menu-item{flex-wrap:wrap}
+  .ds-menu-item .mi-dot{display:none}
+  .ds-actionbar{display:flex}
+}
+
+:root{--accent:#b91c1c;--accent-ink:#8f1414;--accent-wash:color-mix(in srgb,#b91c1c 9%,transparent)}
 </style>
 </head>
 <body>
-<div class="demo-bar">これは <b>コエテク合同会社</b> による<b>リニューアル提案デモ</b>です。実在の Japaneseまぜ麺MARUTA 様の公式サイトではありません（料金は発生しません）。</div>
-<header class="nav"><div class="wrap">
-  <div class="brand"><span class="b-emoji">🍜</span>Japaneseまぜ麺MARUTA</div>
-  <nav class="links"><a href="#concept">こだわり</a><a href="#menu">お品書き</a><a href="#access">アクセス</a><a href="#contact">ご予約</a></nav>
+<div class="ds-demo-bar">これは <b>コエテク合同会社</b> による<b>リニューアル提案デモ</b>です。実在の Japaneseまぜ麺MARUTA 様の公式サイトではありません（料金は発生しません）。</div>
+
+<header class="ds-header"><div class="wrap">
+  <div class="ds-brand"><span class="mk">🍜</span>Japaneseまぜ麺MARUTA</div>
+  <div class="ds-nav-wrap">
+    <nav class="ds-nav"><a href="#reasons">選ばれる理由</a><a href="#menu">お品書き</a><a href="#access">アクセス</a></nav>
+    <a class="ds-btn ds-btn--fill" href="#contact">ご予約</a>
+  </div>
 </div></header>
 
-<div class="hero"><div class="wrap">
-  <div class="emoji">🍜</div>
-  <div class="sub">京都市 ／ ラーメン・和食・麺料理</div>
+<section class="ds-hero"><div class="wrap">
+  <span class="ds-tate" aria-hidden="true">京都市　ラーメン・和食・麺料理</span>
+  <div class="mark">🍜</div>
+  <span class="eyebrow">京都市 ／ ラーメン・和食・麺料理</span>
   <h1>Japaneseまぜ麺MARUTA</h1>
   <p class="lead">一杯に、店主のこだわりを。<br>スープ・麺・具材のすべてに手をかけた、ここだけの一杯をご用意しています。</p>
-  <a class="cta" href="#menu">お品書きを見る</a>
-  <a class="cta ghost" href="#contact">ご予約・お問い合わせ</a>
+  <div class="actions">
+    <a class="ds-btn ds-btn--fill" href="#contact">ご予約・お問い合わせ</a>
+    <a class="ds-btn ds-btn--ghost" href="#menu">お品書きを見る</a>
+  </div>
+</div></section>
+
+<div class="ds-proof"><div class="wrap">
+  <span class="stars">★★★★★</span>
+  <span class="quote">「また来たくなる、京都市の一軒。」</span>
+  <span class="src">— お客様の声（実装イメージ。実サイトではGoogle口コミ等を掲載）</span>
 </div></div>
 
-<section id="concept"><div class="wrap">
-  <p class="eyebrow">Concept</p>
-  <h2>こだわり</h2>
-  <p class="muted" style="max-width:40em">スープ・麺・具材のすべてに手をかけた、ここだけの一杯をご用意しています。 ※本デモの紹介文は、ジャンルに合わせた構成サンプルです。実際の制作では、貴店の歴史・看板メニュー・写真を反映します。</p>
-</div></section>
-
-<section id="menu" style="background:#fff"><div class="wrap">
-  <p class="eyebrow">Menu</p>
-  <h2>お品書き</h2>
-  <div class="menu-grid">
-        <article class="m-card">
-          <div class="m-emoji">🍜</div>
-          <h3>特製らーめん</h3>
-          <p class="muted">サンプル表示</p>
-          <span class="m-price">¥—</span>
-        </article>
-        <article class="m-card">
-          <div class="m-emoji">🍜</div>
-          <h3>つけ麺</h3>
-          <p class="muted">サンプル表示</p>
-          <span class="m-price">¥—</span>
-        </article>
-        <article class="m-card">
-          <div class="m-emoji">🍜</div>
-          <h3>味玉トッピング</h3>
-          <p class="muted">サンプル表示</p>
-          <span class="m-price">¥—</span>
-        </article>
+<section class="ds-section" id="reasons"><div class="wrap">
+  <div class="ds-head"><span class="ds-index">選</span><span class="ds-label">Why us</span></div>
+  <h2 class="ds-h2" style="margin-bottom:.7em">選ばれる理由</h2>
+  <div class="ds-highlights">
+      <div class="ds-hl"><div class="ic">🍜</div><h3>こだわりのラーメン・和食・麺料理</h3><p>素材と手仕事を大切に、ていねいに仕上げます。</p></div>
+      <div class="ds-hl"><div class="ic">🪑</div><h3>落ち着いた店内で</h3><p>京都市で、ゆっくりとお過ごしいただけます。</p></div>
+      <div class="ds-hl"><div class="ic">📅</div><h3>かんたんご予約</h3><p>お電話・オンラインからスムーズにご予約いただけます。</p></div>
   </div>
-  <p class="note muted">※メニュー名・価格は提案用のサンプル表示です。実データ（実メニュー・写真・価格）を反映して正式版を制作します。</p>
 </div></section>
 
-<section id="access"><div class="wrap">
-  <p class="eyebrow">Access</p>
-  <h2>アクセス・ご利用案内</h2>
-  <div class="access">
-    <div>
-      <div class="info-row"><span class="k">エリア</span><span>京都市</span></div>
-      <div class="info-row"><span class="k">ジャンル</span><span>ラーメン・和食・麺料理</span></div>
-      <div class="info-row"><span class="k">電話</span><a class="tel" href="tel:075-748-1961">☎ 075-748-1961</a></div>
-      <div class="info-row"><span class="k">営業時間</span><span class="muted">（提案後に実データを反映）</span></div>
+<section class="ds-section ds-section--alt" id="concept"><div class="wrap">
+  <div class="ds-head"><span class="ds-index">味</span><span class="ds-label">Concept</span></div>
+  <h2 class="ds-h2" style="margin-bottom:.5em">こだわり</h2>
+  <p class="ds-lead-text">スープ・麺・具材のすべてに手をかけた、ここだけの一杯をご用意しています。<br><span style="color:var(--muted);font-size:14px">※本デモの紹介文はジャンルに合わせた構成サンプルです。実制作では貴店の歴史・看板メニュー・写真を反映します。</span></p>
+</div></section>
+
+<section class="ds-section" id="menu"><div class="wrap">
+  <div class="ds-head"><span class="ds-index">品</span><span class="ds-label">Menu</span></div>
+  <h2 class="ds-h2" style="margin-bottom:.6em">お品書き</h2>
+  <div class="ds-menu">
+      <div class="ds-menu-item">
+        <span class="mi-emoji">🍜</span>
+        <span><span class="mi-name">特製らーめん<span class="ds-badge">人気</span></span><span class="mi-sub">サンプル表示</span></span>
+        <span class="mi-dot"></span>
+        <span class="mi-price">¥—</span>
+      </div>
+      <div class="ds-menu-item">
+        <span class="mi-emoji">🍜</span>
+        <span><span class="mi-name">つけ麺</span><span class="mi-sub">サンプル表示</span></span>
+        <span class="mi-dot"></span>
+        <span class="mi-price">¥—</span>
+      </div>
+      <div class="ds-menu-item">
+        <span class="mi-emoji">🍜</span>
+        <span><span class="mi-name">味玉トッピング</span><span class="mi-sub">サンプル表示</span></span>
+        <span class="mi-dot"></span>
+        <span class="mi-price">¥—</span>
+      </div>
+  </div>
+  <p class="ds-note">※メニュー名・価格は提案用のサンプル表示です。実データ（実メニュー・写真・価格）を反映して正式版を制作します。</p>
+</div></section>
+
+<section class="ds-section ds-section--alt" id="access"><div class="wrap">
+  <div class="ds-head"><span class="ds-index">席</span><span class="ds-label">Access</span></div>
+  <h2 class="ds-h2" style="margin-bottom:.7em">アクセス・ご利用案内</h2>
+  <div class="ds-access">
+    <div class="ds-info">
+      <div class="row"><span class="k">エリア</span><span>京都市</span></div>
+      <div class="row"><span class="k">ジャンル</span><span>ラーメン・和食・麺料理</span></div>
+      <div class="row"><span class="k">電話</span><span style="color:var(--muted)">提案後にご案内</span></div>
+      <div class="row"><span class="k">営業時間</span><span style="color:var(--muted)">提案後に実データを反映</span></div>
     </div>
-    <div class="mapph">📍 地図はこの位置に表示されます</div>
+    <div class="ds-map">📍 地図はこの位置に表示されます</div>
   </div>
 </div></section>
 
-<section id="contact"><div class="wrap">
-  <div class="band">
-    <p class="eyebrow" style="color:#fcd34d">Renewal Proposal</p>
+<section class="ds-section" id="contact"><div class="wrap">
+  <div class="ds-cta">
+    <span class="ds-label">Renewal Proposal</span>
     <h2>このデザインで、正式サイトを無料でご提案します</h2>
-    <p style="opacity:.9;max-width:34em;margin:.6em auto 0">スマホ対応・表示速度・予約/通販導線・常時SSLを備えた構成案です。実データを反映したお見積り・正式提案をご案内します。</p>
-    <a class="cta" href="https://timerex.net/s/ryutarote_5007/d6cb0d61">お打ち合わせを予約する</a>
-    <a class="cta ghost" href="mailto:support@koetech.jp">メールで問い合わせ</a>
+    <p>スマホ対応・表示速度・予約/通販導線・常時SSLを備えた構成案です。実データを反映したお見積り・正式提案をご案内します。</p>
+    <div class="actions">
+      <a class="ds-btn ds-btn--fill" href="https://timerex.net/s/ryutarote_5007/d6cb0d61">お打ち合わせを予約する</a>
+      <a class="ds-btn ds-btn--ghost" href="mailto:support@koetech.jp">メールで問い合わせ</a>
+    </div>
+    <div class="ds-reserve-aux">ご予約・お問い合わせはお気軽に</div>
   </div>
 </div></section>
 
-<footer><div class="wrap">
+<footer class="ds-footer"><div class="wrap">
   <div class="disc">※本ページは コエテク合同会社 が公開情報をもとに独自に制作した<b>リニューアル提案サンプル</b>です。掲載情報は参考値で、Japaneseまぜ麺MARUTA 様の公式サイトではありません。料金は一切発生しません。</div>
   <div>コエテク合同会社　Mail: support@koetech.jp　／　制作実績: <a href="https://ryutarote.github.io/web-renewal-studio/">https://ryutarote.github.io/web-renewal-studio/</a></div>
 </div></footer>
+
+<div class="ds-actionbar">
+  <a class="ds-btn ds-btn--line" href="mailto:support@koetech.jp">メール</a>
+  <a class="ds-btn ds-btn--fill" href="#contact">ご予約・お問い合わせ</a>
+</div>
 </body>
 </html>
