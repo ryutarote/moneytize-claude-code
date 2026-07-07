@@ -13,8 +13,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_URL = "https://ryutarote.github.io/web-renewal-studio"
 COMPANY = "コエテク合同会社"
 SENDER_MAIL = "support@koetech.jp"
-CAL = "https://timerex.net/s/ryutarote_5007/d6cb0d61"
+CAL = "https://timerex.net/s/ryutarote_5007/d4ad211b"
 SITE_CSS = os.path.join(ROOT, "design-system", "site.css")
+
+# 提案デモは写真ヒーローのプロフェッショナルLP（landing_page_html）で出力する。
+LP_OUTDIRS = {"leads-b3", "leads-b4", "leads-email"}
 
 ROMAJI = {
     "札幌市": "sapporo", "仙台市": "sendai", "横浜市": "yokohama", "名古屋市": "nagoya",
@@ -252,6 +255,7 @@ def page_html(p, css):
 def gallery_title(outdir):
     labels = {
         "leads-b3": "第3弾",
+        "leads-b4": "第4弾",
         "leads-email": "メール取得済み候補",
     }
     return labels.get(outdir, outdir)
@@ -323,9 +327,12 @@ def landing_css(accent, accent_ink, photo):
   --accent: {accent};
   --accent-ink: {accent_ink};
   --accent-soft: color-mix(in srgb, {accent} 12%, #ffffff);
+  --accent-wash: color-mix(in srgb, {accent} 8%, transparent);
+  --shadow-sm: 0 2px 6px rgba(20,18,16,.06);
   --shadow: 0 26px 60px -32px rgba(20, 18, 16, .5);
+  --shadow-lg: 0 40px 90px -40px rgba(20,18,16,.6);
   --font-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
-  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Times New Roman", serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Shippori Mincho", serif;
 }}
 * {{ box-sizing: border-box; }}
 html {{ scroll-behavior: smooth; }}
@@ -333,29 +340,36 @@ body {{
   margin: 0;
   color: var(--ink);
   background: var(--paper);
-  font-family: "Inter", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
-  line-height: 1.75;
+  font-family: var(--font-gothic);
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }}
 a {{ color: inherit; text-decoration: none; }}
-.wrap {{ width: min(1120px, calc(100% - 40px)); margin: 0 auto; }}
+img {{ max-width: 100%; display: block; }}
+.wrap {{ width: min(1160px, calc(100% - 44px)); margin: 0 auto; }}
+:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }}
+
 .proposal-strip {{
-  background: #111;
-  color: rgba(255,255,255,.82);
+  background: #0d0b09;
+  color: rgba(255,255,255,.66);
   font-size: 12px;
   letter-spacing: .02em;
   padding: 8px 0;
 }}
 .proposal-strip b {{ color: #fff; font-weight: 700; }}
+
+/* dark sticky header — cohesive & premium over the photo hero */
 .site-header {{
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: rgba(251, 250, 247, .86);
-  border-bottom: 1px solid rgba(232, 225, 216, .78);
-  backdrop-filter: blur(14px);
+  z-index: 30;
+  background: color-mix(in srgb, var(--sumi) 82%, transparent);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(16px) saturate(1.3);
 }}
 .site-header .wrap {{
-  min-height: 68px;
+  min-height: 66px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -366,16 +380,13 @@ a {{ color: inherit; text-decoration: none; }}
   align-items: baseline;
   gap: 10px;
   min-width: 0;
+  color: #fff;
   font-weight: 800;
-  letter-spacing: .03em;
+  letter-spacing: .02em;
 }}
-.brand span {{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}}
+.brand span {{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }}
 .brand small {{
-  color: var(--muted);
+  color: rgba(255,255,255,.6);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -384,259 +395,305 @@ a {{ color: inherit; text-decoration: none; }}
 .nav {{
   display: flex;
   align-items: center;
-  gap: 20px;
-  color: #4a4743;
+  gap: 22px;
+  color: rgba(255,255,255,.74);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
 }}
-.nav a {{ min-height: 36px; display: inline-flex; align-items: center; }}
+.nav a {{ min-height: 36px; display: inline-flex; align-items: center; transition: color .15s ease; }}
+.nav a:hover {{ color: #fff; }}
+
 .btn {{
-  min-height: 44px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: 6px;
+  border-radius: 10px;
   border: 1px solid transparent;
-  padding: 10px 18px;
+  padding: 12px 22px;
+  font-family: var(--font-gothic);
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
 }}
-.btn-primary {{ background: var(--accent); color: #fff; box-shadow: 0 14px 34px color-mix(in srgb, var(--accent) 28%, transparent); }}
-.btn-secondary {{ background: rgba(255,255,255,.14); color: #fff; border-color: rgba(255,255,255,.36); }}
-.btn-outline {{ background: #fff; color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 28%, #d9d0c5); }}
+.btn-primary {{ background: var(--accent); color: #fff; box-shadow: 0 14px 30px -12px var(--accent); }}
+.btn-primary:hover {{ transform: translateY(-2px); box-shadow: 0 20px 40px -14px var(--accent); }}
+.btn-secondary {{ background: rgba(255,255,255,.10); color: #fff; border-color: rgba(255,255,255,.42); }}
+.btn-secondary:hover {{ background: rgba(255,255,255,.18); }}
+.btn-outline {{ background: var(--panel); color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }}
+.btn-outline:hover {{ border-color: var(--accent); }}
+.btn-ghost {{ background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.4); }}
+.btn-ghost:hover {{ background: rgba(255,255,255,.16); }}
+
+/* hero — full-bleed photo, refined gradient, confident type */
 .hero {{
   position: relative;
-  min-height: min(720px, calc(100svh - 40px));
+  min-height: min(760px, calc(100svh - 30px));
   display: grid;
   align-items: end;
-  padding: clamp(110px, 16vh, 170px) 0 56px;
+  padding: clamp(96px, 15vh, 168px) 0 clamp(56px, 9vh, 92px);
   color: #fff;
   isolation: isolate;
   background:
-    linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.48) 45%, rgba(0,0,0,.18) 100%),
-    linear-gradient(0deg, rgba(0,0,0,.48) 0%, transparent 38%),
+    linear-gradient(88deg, rgba(10,8,6,.86) 0%, rgba(10,8,6,.6) 42%, rgba(10,8,6,.14) 100%),
+    linear-gradient(0deg, rgba(10,8,6,.7) 0%, rgba(10,8,6,.05) 40%, rgba(10,8,6,.28) 100%),
     url("{photo}") center / cover no-repeat;
+}}
+.hero::before {{
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(120% 80% at 88% 6%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%);
+  mix-blend-mode: screen;
 }}
 .hero::after {{
   content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 130px;
+  position: absolute; inset: auto 0 0; height: 120px; z-index: -1;
   background: linear-gradient(0deg, var(--paper), transparent);
-  z-index: -1;
 }}
-.hero-content {{ max-width: 760px; }}
+.hero-content {{ max-width: 820px; }}
 .eyebrow {{
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: rgba(255,255,255,.86);
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: .12em;
+  gap: 11px;
+  color: rgba(255,255,255,.9);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2em;
   text-transform: uppercase;
 }}
-.eyebrow::before {{
-  content: "";
-  width: 36px;
-  height: 2px;
-  background: var(--accent);
-}}
+.eyebrow::before {{ content: ""; width: 30px; height: 2px; background: var(--accent); }}
 h1 {{
-  margin: 18px 0 18px;
-  max-width: 12em;
+  margin: 18px 0 20px;
+  max-width: 14ch;
   font-family: var(--font-gothic);
   font-weight: 800;
-  font-size: clamp(44px, 8vw, 84px);
+  font-size: clamp(46px, 8.4vw, 88px);
   line-height: 1.02;
-  letter-spacing: .005em;
+  letter-spacing: .004em;
   text-wrap: balance;
   overflow-wrap: anywhere;
+  text-shadow: 0 2px 30px rgba(0,0,0,.3);
 }}
 .hero-lead {{
-  max-width: 650px;
+  max-width: 40em;
   margin: 0;
-  color: rgba(255,255,255,.88);
+  color: rgba(255,255,255,.9);
   font-family: var(--font-mincho);
-  font-size: clamp(16px, 2.2vw, 22px);
-  line-height: 1.9;
+  font-size: clamp(16px, 2.1vw, 22px);
+  line-height: 1.95;
   font-weight: 500;
 }}
 .hero-actions {{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }}
+.hero-trust {{
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 26px;
+  color: rgba(255,255,255,.82); font-size: 13px;
+}}
+.hero-trust .stars {{ color: #ffcf6b; letter-spacing: .1em; }}
+.hero-trust .dot {{ width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.4); }}
 .hero-meta {{
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
-  margin-top: 44px;
-  max-width: 780px;
-  border-radius: 8px;
+  margin-top: 40px;
+  max-width: 720px;
+  border-radius: 12px;
   overflow: hidden;
-  background: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.16);
   border: 1px solid rgba(255,255,255,.18);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
 }}
-.hero-meta div {{ padding: 16px 18px; background: rgba(0,0,0,.18); min-width: 0; }}
-.hero-meta b {{ display: block; color: #fff; font-size: 13px; }}
-.hero-meta span {{ color: rgba(255,255,255,.78); font-size: 12px; }}
-.section {{ padding: clamp(64px, 8vw, 104px) 0; }}
-.section + .section {{ border-top: 1px solid var(--line); }}
-.section.alt {{ background: #fff; }}
+.hero-meta div {{ padding: 16px 20px; background: rgba(10,8,6,.34); min-width: 0; }}
+.hero-meta b {{ display: block; color: #fff; font-size: 14px; font-weight: 700; }}
+.hero-meta span {{ display:block; color: rgba(255,255,255,.68); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 3px; }}
+
+/* social proof band */
+.proofbar {{ background: var(--panel); border-bottom: 1px solid var(--line); }}
+.proofbar .wrap {{ display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 20px; padding: 20px 0; text-align: center; }}
+.proofbar .stars {{ color: var(--accent); letter-spacing: .14em; font-size: 15px; }}
+.proofbar .quote {{ font-family: var(--font-mincho); font-size: 17px; color: var(--ink); }}
+.proofbar .cite {{ font-size: 12px; color: var(--muted); }}
+
+/* sections */
+.section {{ padding: clamp(66px, 8.5vw, 116px) 0; }}
+.section.alt {{ background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }}
 .section-head {{
   display: flex;
   justify-content: space-between;
   align-items: end;
-  gap: 24px;
-  margin-bottom: 28px;
+  gap: 28px;
+  margin-bottom: 34px;
 }}
 .section-kicker {{
+  display: inline-flex; align-items: center; gap: 9px;
   color: var(--accent-ink);
   font-size: 12px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: .16em;
   text-transform: uppercase;
 }}
+.section-kicker::before {{ content: ""; width: 22px; height: 2px; background: var(--accent); }}
 h2 {{
-  margin: 8px 0 0;
-  font-size: clamp(28px, 4vw, 48px);
-  line-height: 1.12;
-  letter-spacing: 0;
+  margin: 12px 0 0;
+  font-family: var(--font-gothic);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.16;
+  letter-spacing: .006em;
   text-wrap: balance;
   overflow-wrap: anywhere;
 }}
-.section-copy {{ max-width: 560px; color: var(--muted); margin: 0; font-size: 15px; }}
-.feature-grid {{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}}
+.section-copy {{ max-width: 540px; color: var(--muted); margin: 0; font-size: 15px; line-height: 1.85; }}
+
+/* value cards */
+.feature-grid {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }}
 .feature {{
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 26px;
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 30px 28px;
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 8px;
-  box-shadow: 0 14px 42px rgba(23,23,23,.05);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease;
 }}
-.feature strong {{ font-size: 24px; line-height: 1.25; letter-spacing: 0; }}
-.feature p {{ color: var(--muted); margin: 18px 0 0; font-size: 14px; }}
-.number {{ color: var(--accent); font-size: 13px; font-weight: 900; letter-spacing: .16em; }}
-.story {{
-  display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-  gap: clamp(30px, 6vw, 72px);
-  align-items: center;
-}}
+.feature:hover {{ transform: translateY(-4px); box-shadow: var(--shadow); }}
+.feature .ic {{ width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-size: 23px; background: var(--accent-wash); }}
+.feature strong {{ font-family: var(--font-gothic); font-size: 20px; font-weight: 700; line-height: 1.35; }}
+.feature p {{ color: var(--muted); margin: 0; font-size: 14px; line-height: 1.8; }}
+.number {{ color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .18em; }}
+
+/* story */
+.story {{ display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(30px, 6vw, 76px); align-items: center; }}
+.story-text h2 {{ margin-top: 14px; }}
+.story-text p {{ color: var(--muted); font-size: 16px; line-height: 1.95; margin: 18px 0 0; }}
 .story-visual {{
-  min-height: 430px;
-  border-radius: 8px;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.22)),
-    url("{photo}") center / cover no-repeat;
-  box-shadow: var(--shadow);
+  position: relative;
+  min-height: 460px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(10,8,6,.04), rgba(10,8,6,.24)), url("{photo}") center / cover no-repeat;
+  box-shadow: var(--shadow-lg);
 }}
-.story-text p {{ color: var(--muted); font-size: 17px; margin: 0 0 18px; }}
-.menu-grid {{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+.story-visual::after {{
+  content: ""; position: absolute; inset: 0; border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14); pointer-events: none;
 }}
+
+/* menu */
+.menu-grid {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }}
 .menu-item {{
-  min-height: 162px;
-  padding: 22px;
-  border-radius: 8px;
+  position: relative;
+  min-height: 150px;
+  padding: 24px;
+  border-radius: 14px;
   border: 1px solid var(--line);
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 10px;
 }}
-.menu-item b {{ font-size: 18px; line-height: 1.35; }}
-.menu-item span {{ color: var(--muted); font-size: 13px; }}
-.reserve {{
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 24px;
-  align-items: stretch;
+.menu-item b {{ font-family: var(--font-gothic); font-size: 18px; font-weight: 700; line-height: 1.35; }}
+.menu-item span {{ color: var(--muted); font-size: 13px; line-height: 1.7; }}
+.menu-item .badge {{
+  position: absolute; top: 16px; right: 16px;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  letter-spacing: .04em; border-radius: 999px; padding: 3px 10px;
 }}
+
+/* deliverables checklist */
+.deliver-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; }}
+.deliver-item {{ display: flex; gap: 13px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); }}
+.deliver-item .ck {{ flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 14px; margin-top: 1px; }}
+.deliver-item b {{ font-family: var(--font-gothic); font-weight: 700; font-size: 15px; }}
+.deliver-item p {{ margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }}
+
+/* reserve / visit */
+.reserve {{ display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 24px; align-items: stretch; }}
 .reserve-panel {{
-  padding: clamp(28px, 5vw, 56px);
-  border-radius: 8px;
-  background: var(--ink);
+  position: relative; overflow: hidden;
+  padding: clamp(30px, 5vw, 58px);
+  border-radius: 18px;
+  background: var(--sumi);
   color: #fff;
 }}
-.reserve-panel p {{ color: rgba(255,255,255,.72); max-width: 660px; }}
-.reserve-actions {{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }}
+.reserve-panel::before {{ content: ""; position: absolute; inset: 0; background: radial-gradient(120% 130% at 100% 0%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%); }}
+.reserve-panel > * {{ position: relative; z-index: 1; }}
+.reserve-panel h2 {{ color: #fff; }}
+.reserve-panel p {{ color: rgba(255,255,255,.74); max-width: 660px; margin: 14px 0 0; }}
+.reserve-actions {{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }}
 .info-card {{
-  padding: 26px;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
+  padding: 30px 28px;
+  border-radius: 18px;
+  background: var(--accent-wash);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
 }}
 .info-row {{
   display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
+  grid-template-columns: 92px minmax(0, 1fr);
   gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, #ddd);
+  padding: 14px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
   font-size: 14px;
 }}
 .info-row:last-child {{ border-bottom: 0; }}
-.info-row b {{ color: var(--accent-ink); }}
-.note {{ color: var(--muted); font-size: 12px; margin-top: 18px; }}
-.footer {{
-  padding: 30px 0 92px;
-  color: var(--muted);
-  border-top: 1px solid var(--line);
-  font-size: 12px;
-}}
-.footer .wrap {{ display: grid; gap: 8px; }}
+.info-row b {{ color: var(--accent-ink); font-weight: 700; }}
+.note {{ color: var(--muted); font-size: 12px; margin-top: 20px; line-height: 1.8; }}
+.note a {{ color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }}
+
+/* footer */
+.footer {{ background: var(--sumi); color: rgba(255,255,255,.58); padding: 42px 0 96px; font-size: 12.5px; line-height: 1.9; }}
+.footer .wrap {{ display: grid; gap: 10px; }}
+.footer b {{ color: rgba(255,255,255,.85); font-weight: 600; }}
+.footer a {{ color: #fff; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }}
+
+/* sticky mobile action bar */
 .actionbar {{
-  position: fixed;
-  z-index: 20;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
-  width: min(720px, calc(100% - 28px));
-  display: none;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 8px;
-  background: rgba(255,255,255,.92);
+  position: fixed; z-index: 40; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: min(560px, calc(100% - 24px));
+  display: none; gap: 8px; padding: 8px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
   border: 1px solid var(--line);
-  box-shadow: 0 18px 50px rgba(23,23,23,.16);
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
 }}
 .actionbar .btn {{ flex: 1; }}
-@media (max-width: 820px) {{
-  body {{ overflow-x: hidden; }}
-  .wrap {{ width: min(100% - 28px, 1120px); }}
-  .proposal-strip {{ font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; word-break: break-all; }}
-  .proposal-strip .wrap {{ width: min(100% - 24px, 1120px); white-space: normal; }}
+
+/* motion — reveal on scroll (opt-in via JS + reduced-motion aware) */
+@media (prefers-reduced-motion: no-preference) {{
+  .js-anim .reveal {{ opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }}
+  .js-anim .reveal.in {{ opacity: 1; transform: none; }}
+  .hero .hero-content > * {{ animation: heroRise .8s cubic-bezier(.2,.7,.2,1) both; }}
+  .hero .eyebrow {{ animation-delay: .05s; }}
+  .hero h1 {{ animation-delay: .14s; }}
+  .hero-lead {{ animation-delay: .24s; }}
+  .hero-actions {{ animation-delay: .32s; }}
+  .hero-trust, .hero-meta {{ animation-delay: .4s; }}
+  @keyframes heroRise {{ from {{ opacity: 0; transform: translateY(16px); }} to {{ opacity: 1; transform: none; }} }}
+}}
+
+@media (max-width: 860px) {{
+  body {{ overflow-x: hidden; padding-bottom: 82px; }}
+  .wrap {{ width: min(100% - 30px, 1160px); }}
+  .proposal-strip {{ font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }}
   .site-header .wrap {{ min-height: 58px; gap: 10px; }}
   .brand {{ flex: 1; font-size: 15px; }}
   .nav {{ display: none; }}
-  .nav a:not(.btn) {{ display: none; }}
-  .nav .btn {{ min-height: 38px; padding: 8px 11px; font-size: 13px; }}
   .brand small {{ display: none; }}
-  .hero {{ min-height: 690px; padding: 96px 0 42px; background-position: center; }}
+  .hero {{ min-height: 660px; padding: 88px 0 44px; }}
   .hero-content {{ min-width: 0; max-width: 100%; }}
-  h1 {{ max-width: 100%; font-size: clamp(38px, 12vw, 54px); line-height: 1.05; word-break: break-all; }}
-  h2 {{ word-break: break-all; }}
-  .hero-lead {{ font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; word-break: break-all; }}
-  .hero-meta {{ grid-template-columns: 1fr; margin-top: 32px; }}
+  h1 {{ max-width: 100%; font-size: clamp(38px, 11vw, 56px); line-height: 1.06; overflow-wrap: anywhere; }}
+  h2 {{ overflow-wrap: anywhere; }}
+  .hero-lead {{ font-size: 16px; line-height: 1.85; overflow-wrap: anywhere; }}
+  .hero-meta {{ grid-template-columns: 1fr; margin-top: 30px; }}
   .section-head {{ display: block; }}
-  .section-copy {{ margin-top: 14px; }}
-  .feature-grid, .menu-grid, .story, .reserve {{ grid-template-columns: 1fr; }}
+  .section-copy {{ margin-top: 16px; }}
+  .feature-grid, .menu-grid, .story, .reserve, .deliver-grid {{ grid-template-columns: 1fr; }}
   .story-visual {{ min-height: 300px; order: -1; }}
   .reserve {{ gap: 14px; }}
-  .actionbar {{ display: none; }}
-  .hide-mobile {{ display: none; }}
+  .actionbar {{ display: flex; }}
 }}
 '''
 
@@ -645,28 +702,45 @@ def landing_page_html(p):
     name = p["shop_name"]
     area = p["area"]
     glabel = jp_genre_label(p.get("genre", ""))
-    _emoji, accent, accent_ink, menu, tagline, concept = genre_info(p.get("genre", ""))
+    emoji, accent, accent_ink, menu, tagline, concept = genre_info(p.get("genre", ""))
     photo = photo_for_genre(p.get("genre", ""))
     phone = p.get("phone", "").strip()
     tel_link = f'<a href="tel:{esc(phone)}">{esc(phone)}</a>' if phone else '<span>正式制作時に反映</span>'
     action_tel = (f'<a class="btn btn-outline" href="tel:{esc(phone)}">電話する</a>' if phone
                   else f'<a class="btn btn-outline" href="mailto:{SENDER_MAIL}">メールする</a>')
+    bar_tel = (f'<a class="btn btn-outline" href="tel:{esc(phone)}">☎ 電話</a>' if phone
+               else f'<a class="btn btn-outline" href="mailto:{SENDER_MAIL}">メール</a>')
     features = [
-        ("01", f"{glabel}らしさを一目で伝える", "初見でも料理・雰囲気・価格帯が伝わる構成で、検索後の離脱を抑えます。"),
-        ("02", "予約と来店導線を近くする", "電話・Web予約・地図への移動を、スマホ画面でも迷わず押せる位置に配置します。"),
-        ("03", "最新情報を更新しやすくする", "メニュー、営業時間、臨時休業などを運用しやすい形で整理します。"),
+        ("🍽️", f"{glabel}らしさを一目で伝える", "初見でも料理・雰囲気・価格帯が伝わるファーストビューで、検索後の離脱を抑えます。"),
+        ("📱", "予約と来店導線を近くに", "電話・Web予約・地図を、スマホでも迷わず押せる位置に。来店直前の行動を後押しします。"),
+        ("🔄", "更新しやすい運用設計", "メニュー・営業時間・臨時休業を、店舗側で無理なく更新できる形に整えます。"),
     ]
     feature_cards = "\n".join(
-        f'''      <article class="feature">
-        <div class="number">{n}</div>
-        <div><strong>{esc(t)}</strong><p>{esc(d)}</p></div>
-      </article>''' for n, t, d in features)
+        f'''        <article class="feature reveal">
+          <div class="ic">{ic}</div>
+          <strong>{esc(t)}</strong>
+          <p>{esc(d)}</p>
+        </article>''' for ic, t, d in features)
     menu_cards = "\n".join(
-        f'''      <article class="menu-item">
-        <b>{esc(item)}</b>
-        <span>実制作では写真・価格・説明文を貴店データに差し替えます</span>
-      </article>''' for item in menu)
-    aux_tel = f' / {esc(phone)}' if phone else ""
+        f'''        <article class="menu-item reveal">
+          {'<span class="badge">人気</span>' if i == 0 else ''}
+          <b>{esc(item)}</b>
+          <span>実制作では写真・価格・説明文を貴店データに差し替えます</span>
+        </article>''' for i, item in enumerate(menu))
+    deliverables = [
+        ("スマホ最適化・高速表示", "モバイル前提のレイアウトと軽量化で、待たせない表示に。"),
+        ("予約・電話・地図の導線設計", "来店に直結するアクションを、目立つ位置に集約。"),
+        ("常時SSL・安全な配信", "鍵マーク付きで、ブラウザの警告が出ない安心の構成。"),
+        ("Googleビジネス・地図連携", "検索から地図・来店までの流れを自然につなぎます。"),
+        ("写真とメニューの見せ方設計", "看板メニューが伝わる構成・順序に整えます。"),
+        ("更新しやすい運用設計", "公開後もお店側で無理なく手を入れられる形に。"),
+    ]
+    deliver_items = "\n".join(
+        f'''        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>{esc(t)}</b><p>{esc(d)}</p></div>
+        </div>''' for t, d in deliverables)
+    aux_tel = f' ／ <a href="tel:{esc(phone)}">{esc(phone)}</a>' if phone else ""
 
     return f'''<!doctype html>
 <html lang="ja">
@@ -675,7 +749,7 @@ def landing_page_html(p):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>{esc(name)}｜Webリニューアル提案LP（{COMPANY}）</title>
-<meta name="description" content="{esc(name)}（{esc(area)}・{esc(glabel)}）向けのプロフェッショナルなWebリニューアル提案LP。">
+<meta name="description" content="{esc(name)}（{esc(area)}・{esc(glabel)}）向けのプロフェッショナルなWebリニューアル提案LP。スマホ来店導線・予約導線・店舗の世界観を1ページに。">
 <meta property="og:title" content="{esc(name)}｜Webリニューアル提案LP">
 <meta property="og:description" content="スマホ来店導線、店舗の世界観、更新しやすさを重視したランディングページ提案。">
 <style>
@@ -683,48 +757,63 @@ def landing_page_html(p):
 </style>
 </head>
 <body>
-<div class="proposal-strip"><div class="wrap">これは <b>{COMPANY}</b> によるWebリニューアル提案LPです。公式サイトではありません。</div></div>
+<div class="proposal-strip"><div class="wrap">これは <b>{COMPANY}</b> によるWebリニューアル提案LPです。実在の {esc(name)} 様の公式サイトではありません（料金は発生しません）。</div></div>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="#"><span>{esc(name)}</span><small>{esc(area)} / {esc(glabel)}</small></a>
+    <a class="brand" href="#top"><span>{esc(name)}</span><small>{esc(area)} / {esc(glabel)}</small></a>
     <nav class="nav">
-      <a href="#story">Concept</a>
-      <a href="#menu">Menu</a>
-      <a href="#visit">Visit</a>
-      <a class="btn btn-outline" href="#contact">相談する</a>
+      <a href="#design">改善案</a>
+      <a href="#story">コンセプト</a>
+      <a href="#menu">お品書き</a>
+      <a href="#visit">アクセス</a>
+      <a class="btn btn-primary" href="#contact">無料相談</a>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="top">
   <section class="hero">
     <div class="wrap">
       <div class="hero-content">
-        <span class="eyebrow">{esc(area)} / {esc(glabel)}</span>
+        <span class="eyebrow">{esc(area)} ／ {esc(glabel)}</span>
         <h1>{esc(name)}</h1>
-        <p class="hero-lead">{esc(tagline)} {esc(concept)}</p>
+        <p class="hero-lead">{esc(tagline)}<br>{esc(concept)}</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#contact">リニューアル相談</a>
-          <a class="btn btn-secondary" href="#menu">メニューを見る</a>
+          <a class="btn btn-primary" href="#contact">無料でリニューアル相談</a>
+          <a class="btn btn-ghost" href="#menu">お品書きを見る</a>
+        </div>
+        <div class="hero-trust">
+          <span class="stars">★★★★★</span>
+          <span>「また来たくなる」を、Webの第一印象から。</span>
+          <span class="dot"></span>
+          <span>初回提案・お見積りは無料</span>
         </div>
         <div class="hero-meta" aria-label="店舗情報">
-          <div><b>Area</b><span>{esc(area)}</span></div>
-          <div><b>Style</b><span>{esc(glabel)}</span></div>
-          <div><b>Phone</b><span>{esc(phone) if phone else "制作時に反映"}</span></div>
+          <div><span>Area</span><b>{esc(area)}</b></div>
+          <div><span>Genre</span><b>{esc(glabel)}</b></div>
+          <div><span>Tel</span><b>{esc(phone) if phone else "制作時に反映"}</b></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section alt">
+  <div class="proofbar">
+    <div class="wrap">
+      <span class="stars">★★★★★</span>
+      <span class="quote">「スマホで見やすく、予約もすぐできる」</span>
+      <span class="cite">— 実装イメージ（実サイトではGoogle口コミ等を掲載）</span>
+    </div>
+  </div>
+
+  <section class="section" id="design">
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-kicker">Landing Page Design</div>
-          <h2>来店前の期待感を、予約行動につなげる構成。</h2>
+          <div class="section-kicker">Renewal Design</div>
+          <h2>来店前の期待感を、予約行動につなげる。</h2>
         </div>
-        <p class="section-copy">スマホで見た瞬間に「どんな店か」「何を食べられるか」「どう予約するか」が伝わるよう、ファーストビューからCTAまでを整理した提案です。</p>
+        <p class="section-copy">スマホで見た瞬間に「どんな店か」「何を食べられるか」「どう予約するか」が伝わるよう、ファーストビューからCTAまでを設計します。</p>
       </div>
       <div class="feature-grid">
 {feature_cards}
@@ -732,23 +821,23 @@ def landing_page_html(p):
     </div>
   </section>
 
-  <section class="section" id="story">
+  <section class="section alt" id="story">
     <div class="wrap story">
       <div class="story-text">
         <div class="section-kicker">Concept</div>
         <h2>{esc(tagline)}</h2>
         <p>{esc(concept)}</p>
-        <p>正式制作では、店内写真、看板メニュー、店主の想い、Googleビジネスプロフィールの情報を反映し、検索から来店までの流れを自然につくります。</p>
+        <p>正式制作では、店内写真・看板メニュー・店主の想い・Googleビジネスの情報を反映し、検索から来店までの流れを自然につくります。</p>
       </div>
-      <div class="story-visual" aria-label="店舗イメージ"></div>
+      <div class="story-visual reveal" aria-label="店舗イメージ"></div>
     </div>
   </section>
 
-  <section class="section alt" id="menu">
+  <section class="section" id="menu">
     <div class="wrap">
       <div class="section-head">
         <div>
-          <div class="section-kicker">Menu Highlights</div>
+          <div class="section-kicker">Menu</div>
           <h2>看板メニューを、迷わず選べる見せ方に。</h2>
         </div>
         <p class="section-copy">料理写真と説明文を組み合わせ、初めてのお客様にもおすすめが伝わるメニュー導線を用意します。</p>
@@ -756,7 +845,22 @@ def landing_page_html(p):
       <div class="menu-grid">
 {menu_cards}
       </div>
-      <p class="note">掲載メニューは提案用サンプルです。正式版では実メニュー・価格・写真に差し替えます。</p>
+      <p class="note">掲載メニューは提案用のサンプル表示です。正式版では実メニュー・価格・写真に差し替えます。</p>
+    </div>
+  </section>
+
+  <section class="section alt" id="deliver">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">What's included</div>
+          <h2>この提案に含まれる内容。</h2>
+        </div>
+        <p class="section-copy">見た目だけでなく、来店・予約という成果につながる要素を一式でご提案します。</p>
+      </div>
+      <div class="deliver-grid">
+{deliver_items}
+      </div>
     </div>
   </section>
 
@@ -764,10 +868,10 @@ def landing_page_html(p):
     <div class="wrap reserve">
       <div class="reserve-panel">
         <div class="section-kicker">Visit</div>
-        <h2>予約、問い合わせ、地図をひとつの流れに。</h2>
-        <p>スマートフォンでの閲覧を前提に、来店直前のユーザーが必要とする情報を下部CTAと店舗情報に集約します。</p>
+        <h2>予約・問い合わせ・地図を、ひとつの流れに。</h2>
+        <p>スマートフォンでの閲覧を前提に、来店直前のお客様が必要とする情報を、下部CTAと店舗情報に集約します。</p>
         <div class="reserve-actions">
-          <a class="btn btn-primary" href="{CAL}">打ち合わせ予約</a>
+          <a class="btn btn-primary" href="{CAL}">打ち合わせを予約</a>
           {action_tel}
         </div>
       </div>
@@ -776,7 +880,7 @@ def landing_page_html(p):
         <div class="info-row"><b>エリア</b><span>{esc(area)}</span></div>
         <div class="info-row"><b>ジャンル</b><span>{esc(glabel)}</span></div>
         <div class="info-row"><b>電話</b>{tel_link}</div>
-        <div class="info-row"><b>更新課題</b><span>{esc(p.get("renewal_reason", "Web導線の改善"))}</span></div>
+        <div class="info-row"><b>改善点</b><span>{esc(p.get("renewal_reason", "Web導線の改善"))}</span></div>
       </aside>
     </div>
   </section>
@@ -786,39 +890,54 @@ def landing_page_html(p):
       <div class="section-head">
         <div>
           <div class="section-kicker">Renewal Proposal</div>
-          <h2>この方向性で、正式な改善案を作成します。</h2>
+          <h2>この方向性で、正式サイトを無料でご提案します。</h2>
         </div>
-        <p class="section-copy">写真・営業時間・実メニューを反映したうえで、公開までの作業範囲と費用感をご案内します。</p>
+        <p class="section-copy">写真・営業時間・実メニューを反映したうえで、公開までの作業範囲と費用感をご案内します。料金は一切発生しません。</p>
       </div>
       <div class="reserve-actions">
         <a class="btn btn-primary" href="{CAL}">無料相談を予約する</a>
         <a class="btn btn-outline" href="mailto:{SENDER_MAIL}">メールで相談する</a>
       </div>
-      <p class="note">{COMPANY} / {SENDER_MAIL}{aux_tel}</p>
+      <p class="note">{COMPANY} ／ <a href="mailto:{SENDER_MAIL}">{SENDER_MAIL}</a>{aux_tel}</p>
     </div>
   </section>
 </main>
 
 <footer class="footer">
   <div class="wrap">
-    <div>本ページは {COMPANY} が公開情報をもとに制作した提案サンプルです。{esc(name)} 様の公式サイトではありません。</div>
-    <div>制作元: {COMPANY} / <a href="{BASE_URL}/">{BASE_URL}/</a></div>
+    <div>本ページは <b>{COMPANY}</b> が公開情報をもとに制作した<b>リニューアル提案サンプル</b>です。{esc(name)} 様の公式サイトではありません。掲載情報は参考値で、料金は一切発生しません。</div>
+    <div>制作元: {COMPANY} ／ 制作実績: <a href="{BASE_URL}/">{BASE_URL}/</a></div>
   </div>
 </footer>
 
 <div class="actionbar" aria-label="固定アクション">
-  {action_tel}
-  <a class="btn btn-primary" href="#contact">相談する</a>
+  {bar_tel}
+  <a class="btn btn-primary" href="#contact">無料相談</a>
 </div>
+
+<script>
+(function(){{
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.body.classList.add("js-anim");
+  var els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)) {{ els.forEach(function(e){{ e.classList.add("in"); }}); return; }}
+  var io = new IntersectionObserver(function(en){{
+    en.forEach(function(x){{ if (x.isIntersecting){{ x.target.classList.add("in"); io.unobserve(x.target); }} }});
+  }}, {{ rootMargin: "0px 0px -8% 0px", threshold: 0.08 }});
+  els.forEach(function(e){{ io.observe(e); }});
+}})();
+</script>
 </body>
 </html>
 '''
 
 
-def landing_gallery_html(items):
+def landing_gallery_html(items, outdir="leads-email"):
+    label = gallery_title(outdir)
     cards = "\n".join(
         f'''      <a class="gallery-card" href="{esc(it['slug'])}/">
-        <span>{esc(it['area'])}</span>
+        <span class="gc-em">{genre_info(it.get('genre',''))[0]}</span>
+        <span class="gc-area">{esc(it['area'])}</span>
         <strong>{esc(it['shop_name'])}</strong>
         <small>{esc(jp_genre_label(it.get('genre','')))}</small>
       </a>''' for it in items)
@@ -828,60 +947,44 @@ def landing_gallery_html(items):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>プロフェッショナルLP提案デモ集（メール取得済み候補 {len(items)}件）｜{COMPANY}</title>
+<title>Webリニューアル提案LP集（{esc(label)} {len(items)}件）｜{COMPANY}</title>
 <style>
 :root {{
-  --ink: #15120e;
-  --muted: #6f685e;
-  --line: #e7e1d7;
-  --paper: #f5f3ef;
-  --accent: #0f766e;
+  --ink: #15120e; --muted: #6f685e; --line: #e7e1d7; --paper: #f5f3ef; --panel: #fff; --sumi: #141210;
+  --accent: #0f766e; --accent-ink: #0b5a53;
+  --font-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
 }}
 * {{ box-sizing: border-box; }}
-body {{
-  margin: 0;
-  color: var(--ink);
-  background: var(--paper);
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
-}}
-.gallery-card strong {{ font-weight: 800; }}
+body {{ margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-gothic); -webkit-font-smoothing: antialiased; }}
 a {{ color: inherit; text-decoration: none; }}
-.wrap {{ width: min(1120px, calc(100% - 40px)); margin: 0 auto; }}
+.wrap {{ width: min(1160px, calc(100% - 44px)); margin: 0 auto; }}
 .hero {{
-  min-height: 430px;
-  display: grid;
-  align-items: end;
-  padding: 88px 0 58px;
-  color: #fff;
+  position: relative; min-height: 460px; display: grid; align-items: end; padding: 92px 0 62px; color: #fff; isolation: isolate;
   background:
-    linear-gradient(90deg, rgba(0,0,0,.72), rgba(0,0,0,.25)),
+    linear-gradient(88deg, rgba(10,8,6,.84), rgba(10,8,6,.4)),
+    linear-gradient(0deg, rgba(10,8,6,.55), transparent 45%),
     url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=82") center / cover no-repeat;
 }}
-.kicker {{ color: rgba(255,255,255,.78); font-size: 13px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }}
-h1 {{ max-width: 820px; margin: 14px 0 0; font-size: clamp(40px, 7vw, 78px); line-height: 1.02; letter-spacing: 0; }}
-.lead {{ max-width: 680px; color: rgba(255,255,255,.82); font-size: 17px; line-height: 1.8; }}
-.section {{ padding: 58px 0 76px; }}
-.gallery {{
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}}
+.hero::after {{ content:""; position:absolute; inset:auto 0 0; height:110px; z-index:-1; background:linear-gradient(0deg,var(--paper),transparent); }}
+.kicker {{ display:inline-flex; align-items:center; gap:10px; color: rgba(255,255,255,.86); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }}
+.kicker::before {{ content:""; width:28px; height:2px; background:var(--accent); }}
+h1 {{ max-width: 18ch; margin: 16px 0 14px; font-family: var(--font-gothic); font-weight: 800; font-size: clamp(38px, 6.4vw, 72px); line-height: 1.06; letter-spacing: .006em; text-wrap: balance; }}
+.lead {{ max-width: 640px; color: rgba(255,255,255,.86); font-family: var(--font-mincho); font-size: 17px; line-height: 1.9; }}
+.section {{ padding: 60px 0 92px; }}
+.gallery {{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }}
 .gallery-card {{
-  min-height: 158px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 22px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 14px 38px rgba(23,23,23,.05);
+  display: flex; flex-direction: column; gap: 6px; padding: 24px; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--panel); box-shadow: 0 2px 6px rgba(20,18,16,.05); transition: transform .18s ease, box-shadow .18s ease;
 }}
-.gallery-card span {{ color: var(--accent); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }}
-.gallery-card strong {{ font-size: 22px; line-height: 1.25; letter-spacing: 0; }}
+.gallery-card:hover {{ transform: translateY(-4px); box-shadow: 0 26px 60px -32px rgba(20,18,16,.5); }}
+.gc-em {{ font-size: 26px; }}
+.gc-area {{ color: var(--accent-ink); font-size: 12px; font-weight: 700; letter-spacing: .1em; }}
+.gallery-card strong {{ font-family: var(--font-gothic); font-size: 20px; font-weight: 800; line-height: 1.3; }}
 .gallery-card small {{ color: var(--muted); font-size: 13px; }}
-.note {{ color: var(--muted); font-size: 12px; margin-top: 28px; line-height: 1.8; }}
-@media (max-width: 820px) {{
+.note {{ color: var(--muted); font-size: 12px; margin-top: 30px; line-height: 1.8; }}
+@media (max-width: 860px) {{
+  .wrap {{ width: min(100% - 30px, 1160px); }}
   .gallery {{ grid-template-columns: 1fr; }}
   .hero {{ min-height: 520px; }}
 }}
@@ -890,9 +993,9 @@ h1 {{ max-width: 820px; margin: 14px 0 0; font-size: clamp(40px, 7vw, 78px); lin
 <body>
 <section class="hero">
   <div class="wrap">
-    <div class="kicker">{COMPANY} / Renewal Proposal</div>
-    <h1>プロフェッショナルLP提案デモ集</h1>
-    <p class="lead">メール取得済み候補 {len(items)}件を、来店導線と店舗の世界観が伝わるランディングページ形式に再設計しました。</p>
+    <div class="kicker">{COMPANY} ／ Renewal Proposal</div>
+    <h1>Webリニューアル提案LP集</h1>
+    <p class="lead">{esc(label)} {len(items)}件を、来店・予約導線と店舗の世界観が伝わるプロフェッショナルなランディングページとして制作しました。</p>
   </div>
 </section>
 <section class="section">
@@ -928,14 +1031,14 @@ def main():
         d = os.path.join(site_root, slug)
         os.makedirs(d, exist_ok=True)
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
-            if outdir == "leads-email":
+            if outdir in LP_OUTDIRS:
                 f.write(landing_page_html(r))
             else:
                 f.write(page_html(r, css))
 
     with open(os.path.join(site_root, "index.html"), "w", encoding="utf-8") as f:
-        if outdir == "leads-email":
-            f.write(landing_gallery_html(rows))
+        if outdir in LP_OUTDIRS:
+            f.write(landing_gallery_html(rows, outdir))
         else:
             f.write(gallery_html(rows, outdir, css))
 
