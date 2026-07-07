@@ -4,488 +4,363 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>リニューアル提案デモ集（leads-b4 50件）｜コエテク合同会社</title>
+<title>Webリニューアル提案LP集（第4弾 50件）｜コエテク合同会社</title>
 <style>
-/* =========================================================================
-   web-renewal-studio Design System  ver.3 「Kanban / 看板」
-   飲食店リニューアル提案デモの共通デザイン。夜の店先アプローチ＝墨黒の
-   ヒーロー/フッターで明るい本文を挟み、ジャンル別アクセントを「灯り」として使う。
-   見出しは太ゴシックの店名 × 明朝のタグライン。装飾番号は使わず漢字マーカーで
-   内容を示す。シグネチャはヒーローの縦書き下げ札。
-   ジャンル別アクセントは各ページが --accent / --accent-ink / --accent-wash を注入。
-   ※クラス名は ver.2 と互換（generator / component preview を壊さない）。
-   ========================================================================= */
-
-:root{
-  /* surfaces */
-  --sumi:#141210; --sumi-2:#201b16; --sumi-line:rgba(255,255,255,.12);
-  --paper:#f5f3ef; --panel:#ffffff; --panel-2:#faf7f2;
-  --ink:#15120e; --ink-soft:#4c463e; --muted:#6f685e; --line:#e7e1d7;
-  /* accent — genre injects these three; sensible fallback below */
-  --accent:#0f766e; --accent-ink:#0b5a53; --accent-wash:rgba(15,118,110,.08);
-  /* type — gothic display (店名/signboard) × mincho accent (献立/tagline) */
-  --font-gothic:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
-  --font-mincho:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP","Times New Roman",serif;
-  /* shape */
-  --maxw:1080px; --radius:12px; --radius-lg:16px;
-  --shadow-sm:0 2px 5px rgba(20,18,16,.05);
-  --shadow:0 26px 60px -32px rgba(20,18,16,.5);
+:root {
+  --ink: #15120e; --muted: #6f685e; --line: #e7e1d7; --paper: #f5f3ef; --panel: #fff; --sumi: #141210;
+  --accent: #0f766e; --accent-ink: #0b5a53;
+  --font-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", serif;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-gothic);
-  line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-a:focus-visible,.ds-btn:focus-visible,.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
-
-/* ---- buttons ---- */
-.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;
-  padding:12px 22px;border-radius:10px;font-family:var(--font-gothic);font-weight:700;font-size:14px;
-  line-height:1;letter-spacing:.02em;border:1px solid transparent;cursor:pointer;white-space:nowrap;
-  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
-.ds-btn--fill{background:var(--accent);color:#fff;box-shadow:0 12px 28px -12px var(--accent)}
-.ds-btn--fill:hover{transform:translateY(-2px);box-shadow:0 18px 36px -14px var(--accent)}
-.ds-btn--ghost{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.42)} /* dark contexts */
-.ds-btn--ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.7)}
-.ds-btn--line{background:var(--panel);color:var(--ink);border-color:var(--line)} /* light contexts */
-.ds-btn--line:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));color:var(--accent-ink)}
-
-/* ---- demo notice strip ---- */
-.ds-demo-bar{background:#0d0b09;color:rgba(255,255,255,.66);font-size:12px;letter-spacing:.01em;
-  text-align:center;padding:8px 16px}
-.ds-demo-bar b{color:#fff;font-weight:700}
-
-/* ---- header (dark signboard) ---- */
-.ds-header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--sumi) 86%,transparent);
-  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--sumi-line)}
-.ds-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.ds-brand{font-family:var(--font-gothic);font-weight:800;font-size:18px;letter-spacing:.02em;color:#fff;
-  display:flex;align-items:center;gap:11px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.ds-brand .mk{flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;
-  font-size:17px;background:color-mix(in srgb,var(--accent) 26%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 46%,transparent)}
-.ds-nav-wrap{display:flex;align-items:center;gap:22px;flex:none}
-.ds-nav{display:flex;gap:22px;font-family:var(--font-gothic);font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
-.ds-nav a{position:relative;padding:4px 0;transition:color .16s}
-.ds-nav a:hover{color:#fff}
-.ds-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;background:var(--accent);transition:right .22s ease}
-.ds-nav a:hover::after{right:0}
-
-/* ---- hero (evening approach: sumi + accent glow, gothic 店名 × mincho tagline) ---- */
-.ds-hero{position:relative;overflow:hidden;background:var(--sumi);color:#fff;
-  padding:clamp(58px,10vh,112px) 0 clamp(96px,13vh,150px)}
-.ds-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(130% 95% at 84% -8%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 58%)}
-.ds-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;
-  background:linear-gradient(0deg,var(--paper),transparent)}
-.ds-hero .wrap{position:relative;z-index:1}
-.ds-hero .mark{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:25px;
-  background:color-mix(in srgb,var(--accent) 20%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);margin-bottom:22px}
-.ds-hero .eyebrow{display:inline-flex;align-items:center;gap:11px;font-family:var(--font-gothic);
-  font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72)}
-.ds-hero .eyebrow::before{content:"";width:28px;height:2px;background:var(--accent)}
-.ds-hero h1{font-family:var(--font-gothic);font-weight:800;font-size:clamp(40px,7.6vw,88px);line-height:1.03;
-  letter-spacing:.005em;margin:16px 0 20px;color:#fff;text-wrap:balance;overflow-wrap:anywhere;
-  max-width:min(100%,15ch)}
-.ds-hero .lead{font-family:var(--font-mincho);font-size:clamp(16px,2.1vw,21px);line-height:1.95;
-  color:rgba(255,255,255,.82);max-width:min(100%,34em);margin:0 0 30px}
-.ds-hero .actions{display:flex;flex-wrap:wrap;gap:12px}
-/* signature: 縦書き下げ札 (hanging tategaki tag) */
-.ds-tate{position:absolute;top:0;right:clamp(18px,6vw,66px);z-index:1;padding-top:96px;
-  writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--font-mincho);font-size:15px;
-  letter-spacing:.34em;color:rgba(255,255,255,.62)}
-.ds-tate::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:1px;height:76px;background:linear-gradient(180deg,var(--accent),transparent)}
-.ds-tate::after{content:"";position:absolute;top:74px;left:50%;transform:translateX(-50%);
-  width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px 2px var(--accent)}
-
-/* ---- proof strip (sits under hero, on paper) ---- */
-.ds-proof{background:var(--paper);border-bottom:1px solid var(--line)}
-.ds-proof .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 18px;
-  padding:22px 24px;text-align:center}
-.ds-proof .stars{color:var(--accent);letter-spacing:.16em;font-size:15px}
-.ds-proof .quote{font-family:var(--font-mincho);font-size:17px;color:var(--ink)}
-.ds-proof .src{font-size:12px;color:var(--muted)}
-
-/* ---- sections ---- */
-.ds-section{padding:clamp(58px,8vw,104px) 0;background:var(--paper)}
-.ds-section--alt{background:var(--panel-2)}
-.ds-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
-/* kanji marker — encodes the section's meaning (選/味/品/席), not a fake sequence */
-.ds-index{flex:none;width:42px;height:42px;display:grid;place-items:center;border-radius:10px;
-  font-family:var(--font-mincho);font-size:20px;font-weight:600;color:var(--accent-ink);
-  background:var(--accent-wash);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line))}
-.ds-label{font-family:var(--font-gothic);font-size:12px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted)}
-.ds-h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(26px,4vw,42px);line-height:1.16;
-  letter-spacing:.01em;color:var(--ink);margin:0;text-wrap:balance;overflow-wrap:anywhere}
-.ds-lead-text{font-family:var(--font-mincho);font-size:clamp(18px,2.3vw,23px);line-height:1.95;
-  color:var(--ink-soft);max-width:34em;margin:0}
-
-/* ---- highlights (選ばれる理由) ---- */
-.ds-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
-.ds-hl{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
-  box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease}
-.ds-hl:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.ds-hl .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:23px;
-  background:var(--accent-wash);margin-bottom:16px}
-.ds-hl h3{font-family:var(--font-gothic);font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink)}
-.ds-hl p{margin:0;font-size:14px;color:var(--muted);line-height:1.85}
-
-/* ---- menu (献立: leader-dot list, 人気 badge) ---- */
-.ds-menu{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
-.ds-menu-item{display:flex;align-items:center;gap:13px;padding:17px 22px;border-top:1px solid var(--line)}
-.ds-menu-item:first-child{border-top:0}
-.mi-emoji{flex:none;font-size:20px}
-.mi-name{font-family:var(--font-gothic);font-weight:700;font-size:16px;color:var(--ink)}
-.mi-sub{display:block;font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.02em}
-.mi-dot{flex:1 1 auto;min-width:20px;height:.7em;border-bottom:1px dotted color-mix(in srgb,var(--ink) 24%,transparent)}
-.mi-price{flex:none;font-family:var(--font-mincho);font-size:15px;color:var(--accent-ink)}
-.ds-badge{display:inline-block;margin-left:9px;padding:2px 9px;border-radius:999px;font-family:var(--font-gothic);
-  font-size:11px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--accent);vertical-align:middle}
-.ds-note{font-size:12.5px;color:var(--muted);line-height:1.8;margin-top:18px}
-
-/* ---- access ---- */
-.ds-access{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px}
-.ds-info{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:6px 24px}
-.ds-info .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:15px 0;
-  border-bottom:1px solid var(--line)}
-.ds-info .row:last-child{border-bottom:0}
-.ds-info .k{flex:none;color:var(--muted);font-family:var(--font-gothic);font-size:13px;font-weight:700;letter-spacing:.04em}
-.ds-info .tel,.tel{color:var(--accent-ink);font-weight:700}
-.ds-map{background:var(--accent-wash);border:1px dashed color-mix(in srgb,var(--accent) 34%,var(--line));
-  border-radius:var(--radius);display:grid;place-items:center;min-height:220px;color:var(--muted);font-size:14px}
-
-/* ---- CTA band (sumi, bookends the hero) ---- */
-.ds-cta{position:relative;overflow:hidden;background:var(--sumi);color:#fff;border-radius:var(--radius-lg);
-  padding:clamp(34px,6vw,66px)}
-.ds-cta::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(120% 130% at 100% 0%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 55%)}
-.ds-cta>*{position:relative;z-index:1}
-.ds-cta .ds-label{color:rgba(255,255,255,.6)}
-.ds-cta h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(24px,3.6vw,38px);line-height:1.2;
-  color:#fff;margin:10px 0 14px;text-wrap:balance}
-.ds-cta p{color:rgba(255,255,255,.78);max-width:54em;margin:0}
-.ds-cta .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.ds-reserve-aux{margin-top:18px;font-size:13px;color:rgba(255,255,255,.62)}
-.ds-reserve-aux a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
-
-/* ---- footer (sumi) ---- */
-.ds-footer{background:var(--sumi);color:rgba(255,255,255,.58);padding:40px 0 46px;font-size:12.5px;line-height:1.9}
-.ds-footer .wrap{display:grid;gap:12px}
-.ds-footer .disc{max-width:72em}
-.ds-footer b{color:rgba(255,255,255,.85);font-weight:600}
-.ds-footer a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
-
-/* ---- gallery (index) ---- */
-.ds-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.ds-gal a{display:flex;flex-direction:column;gap:7px;padding:26px 24px;background:var(--panel);
-  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);
-  transition:transform .18s ease,box-shadow .18s ease}
-.ds-gal a:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.ds-gal .em{font-size:26px}
-.ds-gal .nm{font-family:var(--font-gothic);font-weight:800;font-size:18px;line-height:1.35;color:var(--ink)}
-.ds-gal .sb{font-size:13px;color:var(--muted)}
-
-/* ---- sticky mobile action bar ---- */
-.ds-actionbar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;
-  width:min(560px,calc(100% - 24px));display:none;gap:8px;padding:8px;border-radius:14px;
-  background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(14px);
-  border:1px solid var(--line);box-shadow:var(--shadow)}
-.ds-actionbar .ds-btn{flex:1;min-height:48px}
-
-/* ---- motion: restrained hero entrance; hover lifts above; reduced-motion respected ---- */
-@media (prefers-reduced-motion:no-preference){
-  .ds-hero .wrap>*{animation:dsRise .72s cubic-bezier(.2,.7,.2,1) both}
-  .ds-hero .mark{animation-delay:.02s}
-  .ds-hero .eyebrow{animation-delay:.08s}
-  .ds-hero h1{animation-delay:.15s}
-  .ds-hero .lead{animation-delay:.24s}
-  .ds-hero .actions{animation-delay:.32s}
-  @keyframes dsRise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--font-gothic); -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+.wrap { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+.hero {
+  position: relative; min-height: 460px; display: grid; align-items: end; padding: 92px 0 62px; color: #fff; isolation: isolate;
+  background:
+    linear-gradient(88deg, rgba(10,8,6,.84), rgba(10,8,6,.4)),
+    linear-gradient(0deg, rgba(10,8,6,.55), transparent 45%),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=82") center / cover no-repeat;
 }
-
-/* ---- responsive ---- */
-@media (max-width:860px){
-  body{overflow-x:hidden;padding-bottom:82px}
-  .wrap{padding:0 18px}
-  .ds-tate{display:none}
-  .ds-header .wrap{height:56px;gap:10px}
-  .ds-nav{display:none}
-  .ds-header .ds-btn{display:none}       /* nav+CTA collapse; actionbar carries conversion */
-  .ds-brand{flex:1;font-size:16px}
-  .ds-hero h1{word-break:break-word}
-  .ds-highlights,.ds-access,.ds-gal{grid-template-columns:1fr}
-  .ds-menu-item{flex-wrap:wrap}
-  .ds-menu-item .mi-dot{display:none}
-  .ds-actionbar{display:flex}
+.hero::after { content:""; position:absolute; inset:auto 0 0; height:110px; z-index:-1; background:linear-gradient(0deg,var(--paper),transparent); }
+.kicker { display:inline-flex; align-items:center; gap:10px; color: rgba(255,255,255,.86); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.kicker::before { content:""; width:28px; height:2px; background:var(--accent); }
+h1 { max-width: 18ch; margin: 16px 0 14px; font-family: var(--font-gothic); font-weight: 800; font-size: clamp(38px, 6.4vw, 72px); line-height: 1.06; letter-spacing: .006em; text-wrap: balance; }
+.lead { max-width: 640px; color: rgba(255,255,255,.86); font-family: var(--font-mincho); font-size: 17px; line-height: 1.9; }
+.section { padding: 60px 0 92px; }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.gallery-card {
+  display: flex; flex-direction: column; gap: 6px; padding: 24px; border: 1px solid var(--line); border-radius: 14px;
+  background: var(--panel); box-shadow: 0 2px 6px rgba(20,18,16,.05); transition: transform .18s ease, box-shadow .18s ease;
 }
-
+.gallery-card:hover { transform: translateY(-4px); box-shadow: 0 26px 60px -32px rgba(20,18,16,.5); }
+.gc-em { font-size: 26px; }
+.gc-area { color: var(--accent-ink); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.gallery-card strong { font-family: var(--font-gothic); font-size: 20px; font-weight: 800; line-height: 1.3; }
+.gallery-card small { color: var(--muted); font-size: 13px; }
+.note { color: var(--muted); font-size: 12px; margin-top: 30px; line-height: 1.8; }
+@media (max-width: 860px) {
+  .wrap { width: min(100% - 30px, 1160px); }
+  .gallery { grid-template-columns: 1fr; }
+  .hero { min-height: 520px; }
+}
 </style>
 </head>
 <body>
-<section class="ds-hero"><div class="wrap">
-  <span class="eyebrow">コエテク合同会社｜Renewal Proposal</span>
-  <h1>提案デモ集　leads-b4</h1>
-  <p class="lead">各店の旧サイト改善を体現した、スマホ対応・常時SSL・高速表示の構成サンプル（全50件）。</p>
-</div></section>
-<section class="ds-section"><div class="wrap">
-  <div class="ds-gal">
-    <a href="kanazawa-001/">
-      <div class="em">🍱</div>
-      <div class="nm">大衆浪漫食堂　ハイカラトンボ</div>
-      <div class="sb">金沢市 ／ 和食</div>
-    </a>
-    <a href="kanazawa-002/">
-      <div class="em">☕</div>
-      <div class="nm">Cafe Apache coffee &amp; talk</div>
-      <div class="sb">金沢市 ／ cake・喫茶店・和食</div>
-    </a>
-    <a href="fukuoka-003/">
-      <div class="em">🍱</div>
-      <div class="nm">リセルキッチン</div>
-      <div class="sb">福岡市 ／ 和食</div>
-    </a>
-    <a href="fukuoka-004/">
-      <div class="em">🍱</div>
-      <div class="nm">ブリしゃぶと日本酒 喜々</div>
-      <div class="sb">福岡市 ／ 和食</div>
-    </a>
-    <a href="fukuoka-005/">
-      <div class="em">🍶</div>
-      <div class="nm">みなと温泉 波葉の湯</div>
-      <div class="sb">福岡市 ／ public_bath</div>
-    </a>
-    <a href="fukuoka-006/">
-      <div class="em">🍶</div>
-      <div class="nm">Notime Mixology Bar</div>
-      <div class="sb">福岡市 ／ バー</div>
-    </a>
-    <a href="fukuoka-007/">
-      <div class="em">🍶</div>
-      <div class="nm">Morris&#x27; Red Fox</div>
-      <div class="sb">福岡市 ／ pub_food</div>
-    </a>
-    <a href="fukuoka-008/">
-      <div class="em">🍶</div>
-      <div class="nm">Morris&#x27; Hippo</div>
-      <div class="sb">福岡市 ／ 酒場</div>
-    </a>
-    <a href="fukuoka-009/">
-      <div class="em">🍴</div>
-      <div class="nm">Morris&#x27; Black Sheep</div>
-      <div class="sb">福岡市 ／ irish</div>
-    </a>
-    <a href="fukuoka-010/">
-      <div class="em">☕</div>
-      <div class="nm">FUK COFFEE</div>
-      <div class="sb">福岡市 ／ 喫茶店</div>
-    </a>
-    <a href="fukuoka-011/">
-      <div class="em">☕</div>
-      <div class="nm">Cat and Fish</div>
-      <div class="sb">福岡市 ／ カフェ</div>
-    </a>
-    <a href="kumamoto-012/">
-      <div class="em">🍴</div>
-      <div class="nm">銀杏 自助式餐廳</div>
-      <div class="sb">熊本市 ／ レストラン</div>
-    </a>
-    <a href="yokohama-013/">
-      <div class="em">🥟</div>
-      <div class="nm">翠鳳 本店</div>
-      <div class="sb">横浜市 ／ 中華料理</div>
-    </a>
-    <a href="yokohama-014/">
-      <div class="em">🍜</div>
-      <div class="nm">福満園 本店</div>
-      <div class="sb">横浜市 ／ 中華料理・ラーメン・noodles</div>
-    </a>
-    <a href="yokohama-015/">
-      <div class="em">🥟</div>
-      <div class="nm">福満円 別館</div>
-      <div class="sb">横浜市 ／ 中華料理</div>
-    </a>
-    <a href="yokohama-016/">
-      <div class="em">☕</div>
-      <div class="nm">ホノルルコーヒー</div>
-      <div class="sb">横浜市 ／ 喫茶店</div>
-    </a>
-    <a href="yokohama-017/">
-      <div class="em">🍴</div>
-      <div class="nm">サンドグラス</div>
-      <div class="sb">横浜市 ／ tea・cake・サンドイッチ</div>
-    </a>
-    <a href="yokohama-018/">
-      <div class="em">☕</div>
-      <div class="nm">キャラバンコーヒースタンド</div>
-      <div class="sb">横浜市 ／ 喫茶店</div>
-    </a>
-    <a href="yokohama-019/">
-      <div class="em">🍝</div>
-      <div class="nm">The Blue Bell</div>
-      <div class="sb">横浜市 ／ ピッツァ・pancake</div>
-    </a>
-    <a href="sapporo-020/">
-      <div class="em">🍜</div>
-      <div class="nm">麺のひな詩</div>
-      <div class="sb">札幌市 ／ ラーメン</div>
-    </a>
-    <a href="sapporo-021/">
-      <div class="em">🍱</div>
-      <div class="nm">氷雪の門</div>
-      <div class="sb">札幌市 ／ 和食</div>
-    </a>
-    <a href="sapporo-022/">
-      <div class="em">🍜</div>
-      <div class="nm">味噌ラーメン山岡家</div>
-      <div class="sb">札幌市 ／ ラーメン</div>
-    </a>
-    <a href="sapporo-023/">
-      <div class="em">☕</div>
-      <div class="nm">丸美珈琲店</div>
-      <div class="sb">札幌市 ／ カフェ</div>
-    </a>
-    <a href="sapporo-024/">
-      <div class="em">🍜</div>
-      <div class="nm">中央食堂</div>
-      <div class="sb">札幌市 ／ カレー・和食・noodles</div>
-    </a>
-    <a href="sapporo-025/">
-      <div class="em">🍴</div>
-      <div class="nm">ラ・メゾン・ド・カリークゥー</div>
-      <div class="sb">札幌市 ／ カレー</div>
-    </a>
-    <a href="sapporo-026/">
-      <div class="em">🍴</div>
-      <div class="nm">スープカレーTreasure</div>
-      <div class="sb">札幌市 ／ soup_curry</div>
-    </a>
-    <a href="sapporo-027/">
-      <div class="em">🍴</div>
-      <div class="nm">スープカレー GARAKU</div>
-      <div class="sb">札幌市 ／ カレー</div>
-    </a>
-    <a href="sapporo-028/">
-      <div class="em">🍴</div>
-      <div class="nm">サブウェイ</div>
-      <div class="sb">札幌市 ／ サンドイッチ</div>
-    </a>
-    <a href="sapporo-029/">
-      <div class="em">☕</div>
-      <div class="nm">カフェ・ド・クリエ</div>
-      <div class="sb">札幌市 ／ 喫茶店</div>
-    </a>
-    <a href="sapporo-030/">
-      <div class="em">🍜</div>
-      <div class="nm">らーめん吉山商店</div>
-      <div class="sb">札幌市 ／ ラーメン</div>
-    </a>
-    <a href="sapporo-031/">
-      <div class="em">🍴</div>
-      <div class="nm">Terra</div>
-      <div class="sb">札幌市 ／ mediteranian</div>
-    </a>
-    <a href="sapporo-032/">
-      <div class="em">🍴</div>
-      <div class="nm">MEL&#x27;S Diner</div>
-      <div class="sb">札幌市 ／ レストラン</div>
-    </a>
-    <a href="sapporo-033/">
-      <div class="em">🍴</div>
-      <div class="nm">Curry SAVOY</div>
-      <div class="sb">札幌市 ／ soup_curry</div>
-    </a>
-    <a href="sapporo-034/">
-      <div class="em">🍴</div>
-      <div class="nm">Curry Di. SaVoY</div>
-      <div class="sb">札幌市 ／ カレー</div>
-    </a>
-    <a href="okayama-035/">
-      <div class="em">🍴</div>
-      <div class="nm">鉄板鍋タナタナ</div>
-      <div class="sb">岡山市 ／ korean</div>
-    </a>
-    <a href="okayama-036/">
-      <div class="em">🍶</div>
-      <div class="nm">酒膳たいら</div>
-      <div class="sb">岡山市 ／ 酒場</div>
-    </a>
-    <a href="okayama-037/">
-      <div class="em">🍴</div>
-      <div class="nm">うまいもん あるもに</div>
-      <div class="sb">岡山市 ／ レストラン</div>
-    </a>
-    <a href="osaka-038/">
-      <div class="em">☕</div>
-      <div class="nm">＠ほぉ～むカフェ</div>
-      <div class="sb">大阪市 ／ カフェ</div>
-    </a>
-    <a href="osaka-039/">
-      <div class="em">🍴</div>
-      <div class="nm">麺や拓</div>
-      <div class="sb">大阪市 ／ レストラン</div>
-    </a>
-    <a href="osaka-040/">
-      <div class="em">🍣</div>
-      <div class="nm">蔵ます</div>
-      <div class="sb">大阪市 ／ 寿司</div>
-    </a>
-    <a href="osaka-041/">
-      <div class="em">🍴</div>
-      <div class="nm">明治軒</div>
-      <div class="sb">大阪市 ／ レストラン</div>
-    </a>
-    <a href="osaka-042/">
-      <div class="em">🍜</div>
-      <div class="nm">大阪スタ味噌ラーメンわだ</div>
-      <div class="sb">大阪市 ／ ラーメン</div>
-    </a>
-    <a href="osaka-043/">
-      <div class="em">🍜</div>
-      <div class="nm">千とせ 本店</div>
-      <div class="sb">大阪市 ／ 麺料理</div>
-    </a>
-    <a href="osaka-044/">
-      <div class="em">🍜</div>
-      <div class="nm">千とせ べっかん</div>
-      <div class="sb">大阪市 ／ 麺料理</div>
-    </a>
-    <a href="osaka-045/">
-      <div class="em">🍶</div>
-      <div class="nm">ヴァンパイアサイド</div>
-      <div class="sb">大阪市 ／ バー</div>
-    </a>
-    <a href="osaka-046/">
-      <div class="em">🍴</div>
-      <div class="nm">レコッコレ</div>
-      <div class="sb">大阪市 ／ レストラン</div>
-    </a>
-    <a href="osaka-047/">
-      <div class="em">🍔</div>
-      <div class="nm">ゼッテリア</div>
-      <div class="sb">大阪市 ／ バーガー</div>
-    </a>
-    <a href="osaka-048/">
-      <div class="em">🍴</div>
-      <div class="nm">コンヴィヴィアリテ</div>
-      <div class="sb">大阪市 ／ フランス料理</div>
-    </a>
-    <a href="osaka-049/">
-      <div class="em">🍶</div>
-      <div class="nm">ウサギ (USA☆GI)</div>
-      <div class="sb">大阪市 ／ バー</div>
-    </a>
-    <a href="osaka-050/">
-      <div class="em">☕</div>
-      <div class="nm">アズアン</div>
-      <div class="sb">大阪市 ／ カフェ</div>
-    </a>
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker">コエテク合同会社 ／ Renewal Proposal</div>
+    <h1>Webリニューアル提案LP集</h1>
+    <p class="lead">第4弾 50件を、来店・予約導線と店舗の世界観が伝わるプロフェッショナルなランディングページとして制作しました。</p>
   </div>
-  <p class="ds-note" style="margin-top:30px">※すべて コエテク合同会社 が公開情報をもとに制作した提案サンプルで、各店の公式サイトではありません。</p>
-</div></section>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="gallery">
+      <a class="gallery-card" href="kanazawa-001/">
+        <span class="gc-em">🍱</span>
+        <span class="gc-area">金沢市</span>
+        <strong>大衆浪漫食堂　ハイカラトンボ</strong>
+        <small>和食</small>
+      </a>
+      <a class="gallery-card" href="kanazawa-002/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">金沢市</span>
+        <strong>Cafe Apache coffee &amp; talk</strong>
+        <small>cake・喫茶店・和食</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-003/">
+        <span class="gc-em">🍱</span>
+        <span class="gc-area">福岡市</span>
+        <strong>リセルキッチン</strong>
+        <small>和食</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-004/">
+        <span class="gc-em">🍱</span>
+        <span class="gc-area">福岡市</span>
+        <strong>ブリしゃぶと日本酒 喜々</strong>
+        <small>和食</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-005/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">福岡市</span>
+        <strong>みなと温泉 波葉の湯</strong>
+        <small>public_bath</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-006/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">福岡市</span>
+        <strong>Notime Mixology Bar</strong>
+        <small>バー</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-007/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">福岡市</span>
+        <strong>Morris&#x27; Red Fox</strong>
+        <small>pub_food</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-008/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">福岡市</span>
+        <strong>Morris&#x27; Hippo</strong>
+        <small>酒場</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-009/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">福岡市</span>
+        <strong>Morris&#x27; Black Sheep</strong>
+        <small>irish</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-010/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">福岡市</span>
+        <strong>FUK COFFEE</strong>
+        <small>喫茶店</small>
+      </a>
+      <a class="gallery-card" href="fukuoka-011/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">福岡市</span>
+        <strong>Cat and Fish</strong>
+        <small>カフェ</small>
+      </a>
+      <a class="gallery-card" href="kumamoto-012/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">熊本市</span>
+        <strong>銀杏 自助式餐廳</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="yokohama-013/">
+        <span class="gc-em">🥟</span>
+        <span class="gc-area">横浜市</span>
+        <strong>翠鳳 本店</strong>
+        <small>中華料理</small>
+      </a>
+      <a class="gallery-card" href="yokohama-014/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">横浜市</span>
+        <strong>福満園 本店</strong>
+        <small>中華料理・ラーメン・noodles</small>
+      </a>
+      <a class="gallery-card" href="yokohama-015/">
+        <span class="gc-em">🥟</span>
+        <span class="gc-area">横浜市</span>
+        <strong>福満円 別館</strong>
+        <small>中華料理</small>
+      </a>
+      <a class="gallery-card" href="yokohama-016/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">横浜市</span>
+        <strong>ホノルルコーヒー</strong>
+        <small>喫茶店</small>
+      </a>
+      <a class="gallery-card" href="yokohama-017/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">横浜市</span>
+        <strong>サンドグラス</strong>
+        <small>tea・cake・サンドイッチ</small>
+      </a>
+      <a class="gallery-card" href="yokohama-018/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">横浜市</span>
+        <strong>キャラバンコーヒースタンド</strong>
+        <small>喫茶店</small>
+      </a>
+      <a class="gallery-card" href="yokohama-019/">
+        <span class="gc-em">🍝</span>
+        <span class="gc-area">横浜市</span>
+        <strong>The Blue Bell</strong>
+        <small>ピッツァ・pancake</small>
+      </a>
+      <a class="gallery-card" href="sapporo-020/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">札幌市</span>
+        <strong>麺のひな詩</strong>
+        <small>ラーメン</small>
+      </a>
+      <a class="gallery-card" href="sapporo-021/">
+        <span class="gc-em">🍱</span>
+        <span class="gc-area">札幌市</span>
+        <strong>氷雪の門</strong>
+        <small>和食</small>
+      </a>
+      <a class="gallery-card" href="sapporo-022/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">札幌市</span>
+        <strong>味噌ラーメン山岡家</strong>
+        <small>ラーメン</small>
+      </a>
+      <a class="gallery-card" href="sapporo-023/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">札幌市</span>
+        <strong>丸美珈琲店</strong>
+        <small>カフェ</small>
+      </a>
+      <a class="gallery-card" href="sapporo-024/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">札幌市</span>
+        <strong>中央食堂</strong>
+        <small>カレー・和食・noodles</small>
+      </a>
+      <a class="gallery-card" href="sapporo-025/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>ラ・メゾン・ド・カリークゥー</strong>
+        <small>カレー</small>
+      </a>
+      <a class="gallery-card" href="sapporo-026/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>スープカレーTreasure</strong>
+        <small>soup_curry</small>
+      </a>
+      <a class="gallery-card" href="sapporo-027/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>スープカレー GARAKU</strong>
+        <small>カレー</small>
+      </a>
+      <a class="gallery-card" href="sapporo-028/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>サブウェイ</strong>
+        <small>サンドイッチ</small>
+      </a>
+      <a class="gallery-card" href="sapporo-029/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">札幌市</span>
+        <strong>カフェ・ド・クリエ</strong>
+        <small>喫茶店</small>
+      </a>
+      <a class="gallery-card" href="sapporo-030/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">札幌市</span>
+        <strong>らーめん吉山商店</strong>
+        <small>ラーメン</small>
+      </a>
+      <a class="gallery-card" href="sapporo-031/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>Terra</strong>
+        <small>mediteranian</small>
+      </a>
+      <a class="gallery-card" href="sapporo-032/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>MEL&#x27;S Diner</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="sapporo-033/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>Curry SAVOY</strong>
+        <small>soup_curry</small>
+      </a>
+      <a class="gallery-card" href="sapporo-034/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">札幌市</span>
+        <strong>Curry Di. SaVoY</strong>
+        <small>カレー</small>
+      </a>
+      <a class="gallery-card" href="okayama-035/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">岡山市</span>
+        <strong>鉄板鍋タナタナ</strong>
+        <small>korean</small>
+      </a>
+      <a class="gallery-card" href="okayama-036/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">岡山市</span>
+        <strong>酒膳たいら</strong>
+        <small>酒場</small>
+      </a>
+      <a class="gallery-card" href="okayama-037/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">岡山市</span>
+        <strong>うまいもん あるもに</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="osaka-038/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">大阪市</span>
+        <strong>＠ほぉ～むカフェ</strong>
+        <small>カフェ</small>
+      </a>
+      <a class="gallery-card" href="osaka-039/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">大阪市</span>
+        <strong>麺や拓</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="osaka-040/">
+        <span class="gc-em">🍣</span>
+        <span class="gc-area">大阪市</span>
+        <strong>蔵ます</strong>
+        <small>寿司</small>
+      </a>
+      <a class="gallery-card" href="osaka-041/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">大阪市</span>
+        <strong>明治軒</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="osaka-042/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">大阪市</span>
+        <strong>大阪スタ味噌ラーメンわだ</strong>
+        <small>ラーメン</small>
+      </a>
+      <a class="gallery-card" href="osaka-043/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">大阪市</span>
+        <strong>千とせ 本店</strong>
+        <small>麺料理</small>
+      </a>
+      <a class="gallery-card" href="osaka-044/">
+        <span class="gc-em">🍜</span>
+        <span class="gc-area">大阪市</span>
+        <strong>千とせ べっかん</strong>
+        <small>麺料理</small>
+      </a>
+      <a class="gallery-card" href="osaka-045/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">大阪市</span>
+        <strong>ヴァンパイアサイド</strong>
+        <small>バー</small>
+      </a>
+      <a class="gallery-card" href="osaka-046/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">大阪市</span>
+        <strong>レコッコレ</strong>
+        <small>レストラン</small>
+      </a>
+      <a class="gallery-card" href="osaka-047/">
+        <span class="gc-em">🍔</span>
+        <span class="gc-area">大阪市</span>
+        <strong>ゼッテリア</strong>
+        <small>バーガー</small>
+      </a>
+      <a class="gallery-card" href="osaka-048/">
+        <span class="gc-em">🍴</span>
+        <span class="gc-area">大阪市</span>
+        <strong>コンヴィヴィアリテ</strong>
+        <small>フランス料理</small>
+      </a>
+      <a class="gallery-card" href="osaka-049/">
+        <span class="gc-em">🍶</span>
+        <span class="gc-area">大阪市</span>
+        <strong>ウサギ (USA☆GI)</strong>
+        <small>バー</small>
+      </a>
+      <a class="gallery-card" href="osaka-050/">
+        <span class="gc-em">☕</span>
+        <span class="gc-area">大阪市</span>
+        <strong>アズアン</strong>
+        <small>カフェ</small>
+      </a>
+    </div>
+    <p class="note">すべて コエテク合同会社 が公開情報をもとに制作した提案サンプルで、各店の公式サイトではありません。</p>
+  </div>
+</section>
 </body>
 </html>

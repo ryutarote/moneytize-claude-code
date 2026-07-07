@@ -4,338 +4,614 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Tempura Yoshikawa (iK)｜リニューアル提案デモ（コエテク合同会社）</title>
-<meta name="description" content="Tempura Yoshikawa (iK)（京都市・レストラン）のWebサイト リニューアル提案デモ。コエテク合同会社が公開情報をもとに試作したサンプルです。">
-<meta property="og:title" content="Tempura Yoshikawa (iK)｜リニューアル提案デモ">
-<meta property="og:description" content="スマホ対応・高速表示・予約導線を備えた、現代的な構成案（サンプル）。">
+<title>Tempura Yoshikawa (iK)｜Webリニューアル提案LP（コエテク合同会社）</title>
+<meta name="description" content="Tempura Yoshikawa (iK)（京都市・レストラン）向けのプロフェッショナルなWebリニューアル提案LP。スマホ来店導線・予約導線・店舗の世界観を1ページに。">
+<meta property="og:title" content="Tempura Yoshikawa (iK)｜Webリニューアル提案LP">
+<meta property="og:description" content="スマホ来店導線、店舗の世界観、更新しやすさを重視したランディングページ提案。">
 <style>
-/* =========================================================================
-   web-renewal-studio Design System  ver.3 「Kanban / 看板」
-   飲食店リニューアル提案デモの共通デザイン。夜の店先アプローチ＝墨黒の
-   ヒーロー/フッターで明るい本文を挟み、ジャンル別アクセントを「灯り」として使う。
-   見出しは太ゴシックの店名 × 明朝のタグライン。装飾番号は使わず漢字マーカーで
-   内容を示す。シグネチャはヒーローの縦書き下げ札。
-   ジャンル別アクセントは各ページが --accent / --accent-ink / --accent-wash を注入。
-   ※クラス名は ver.2 と互換（generator / component preview を壊さない）。
-   ========================================================================= */
 
-:root{
-  /* surfaces */
-  --sumi:#141210; --sumi-2:#201b16; --sumi-line:rgba(255,255,255,.12);
-  --paper:#f5f3ef; --panel:#ffffff; --panel-2:#faf7f2;
-  --ink:#15120e; --ink-soft:#4c463e; --muted:#6f685e; --line:#e7e1d7;
-  /* accent — genre injects these three; sensible fallback below */
-  --accent:#0f766e; --accent-ink:#0b5a53; --accent-wash:rgba(15,118,110,.08);
-  /* type — gothic display (店名/signboard) × mincho accent (献立/tagline) */
-  --font-gothic:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",Meiryo,sans-serif;
-  --font-mincho:"Hiragino Mincho ProN","Yu Mincho",YuMincho,"Noto Serif JP","Times New Roman",serif;
-  /* shape */
-  --maxw:1080px; --radius:12px; --radius-lg:16px;
-  --shadow-sm:0 2px 5px rgba(20,18,16,.05);
-  --shadow:0 26px 60px -32px rgba(20,18,16,.5);
+:root {
+  --ink: #15120e;
+  --muted: #6f685e;
+  --line: #e7e1d7;
+  --paper: #f5f3ef;
+  --panel: #ffffff;
+  --sumi: #141210;
+  --accent: #0f766e;
+  --accent-ink: #0b5a53;
+  --accent-soft: color-mix(in srgb, #0f766e 12%, #ffffff);
+  --accent-wash: color-mix(in srgb, #0f766e 8%, transparent);
+  --shadow-sm: 0 2px 6px rgba(20,18,16,.06);
+  --shadow: 0 26px 60px -32px rgba(20, 18, 16, .5);
+  --shadow-lg: 0 40px 90px -40px rgba(20,18,16,.6);
+  --font-gothic: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+  --font-mincho: "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Shippori Mincho", serif;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-gothic);
-  line-height:1.8;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-a:focus-visible,.ds-btn:focus-visible,.ds-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-gothic);
+  line-height: 1.78;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.wrap { width: min(1160px, calc(100% - 44px)); margin: 0 auto; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
-/* ---- buttons ---- */
-.ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;
-  padding:12px 22px;border-radius:10px;font-family:var(--font-gothic);font-weight:700;font-size:14px;
-  line-height:1;letter-spacing:.02em;border:1px solid transparent;cursor:pointer;white-space:nowrap;
-  transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
-.ds-btn--fill{background:var(--accent);color:#fff;box-shadow:0 12px 28px -12px var(--accent)}
-.ds-btn--fill:hover{transform:translateY(-2px);box-shadow:0 18px 36px -14px var(--accent)}
-.ds-btn--ghost{background:rgba(255,255,255,.06);color:#fff;border-color:rgba(255,255,255,.42)} /* dark contexts */
-.ds-btn--ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.7)}
-.ds-btn--line{background:var(--panel);color:var(--ink);border-color:var(--line)} /* light contexts */
-.ds-btn--line:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));color:var(--accent-ink)}
+.proposal-strip {
+  background: #0d0b09;
+  color: rgba(255,255,255,.66);
+  font-size: 12px;
+  letter-spacing: .02em;
+  padding: 8px 0;
+}
+.proposal-strip b { color: #fff; font-weight: 700; }
 
-/* ---- demo notice strip ---- */
-.ds-demo-bar{background:#0d0b09;color:rgba(255,255,255,.66);font-size:12px;letter-spacing:.01em;
-  text-align:center;padding:8px 16px}
-.ds-demo-bar b{color:#fff;font-weight:700}
+/* dark sticky header — cohesive & premium over the photo hero */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: color-mix(in srgb, var(--sumi) 82%, transparent);
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(16px) saturate(1.3);
+}
+.site-header .wrap {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.brand span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.brand small {
+  color: rgba(255,255,255,.6);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  color: rgba(255,255,255,.74);
+  font-size: 13px;
+  font-weight: 600;
+}
+.nav a { min-height: 36px; display: inline-flex; align-items: center; transition: color .15s ease; }
+.nav a:hover { color: #fff; }
 
-/* ---- header (dark signboard) ---- */
-.ds-header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--sumi) 86%,transparent);
-  backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid var(--sumi-line)}
-.ds-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.ds-brand{font-family:var(--font-gothic);font-weight:800;font-size:18px;letter-spacing:.02em;color:#fff;
-  display:flex;align-items:center;gap:11px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.ds-brand .mk{flex:none;display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;
-  font-size:17px;background:color-mix(in srgb,var(--accent) 26%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 46%,transparent)}
-.ds-nav-wrap{display:flex;align-items:center;gap:22px;flex:none}
-.ds-nav{display:flex;gap:22px;font-family:var(--font-gothic);font-size:13px;font-weight:600;color:rgba(255,255,255,.72)}
-.ds-nav a{position:relative;padding:4px 0;transition:color .16s}
-.ds-nav a:hover{color:#fff}
-.ds-nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;background:var(--accent);transition:right .22s ease}
-.ds-nav a:hover::after{right:0}
+.btn {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 12px 22px;
+  font-family: var(--font-gothic);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, background .16s ease, border-color .16s ease;
+}
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 14px 30px -12px var(--accent); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -14px var(--accent); }
+.btn-secondary { background: rgba(255,255,255,.10); color: #fff; border-color: rgba(255,255,255,.42); }
+.btn-secondary:hover { background: rgba(255,255,255,.18); }
+.btn-outline { background: var(--panel); color: var(--accent-ink); border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); }
+.btn-outline:hover { border-color: var(--accent); }
+.btn-ghost { background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.4); }
+.btn-ghost:hover { background: rgba(255,255,255,.16); }
 
-/* ---- hero (evening approach: sumi + accent glow, gothic 店名 × mincho tagline) ---- */
-.ds-hero{position:relative;overflow:hidden;background:var(--sumi);color:#fff;
-  padding:clamp(58px,10vh,112px) 0 clamp(96px,13vh,150px)}
-.ds-hero::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(130% 95% at 84% -8%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 58%)}
-.ds-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;pointer-events:none;
-  background:linear-gradient(0deg,var(--paper),transparent)}
-.ds-hero .wrap{position:relative;z-index:1}
-.ds-hero .mark{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:25px;
-  background:color-mix(in srgb,var(--accent) 20%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);margin-bottom:22px}
-.ds-hero .eyebrow{display:inline-flex;align-items:center;gap:11px;font-family:var(--font-gothic);
-  font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72)}
-.ds-hero .eyebrow::before{content:"";width:28px;height:2px;background:var(--accent)}
-.ds-hero h1{font-family:var(--font-gothic);font-weight:800;font-size:clamp(40px,7.6vw,88px);line-height:1.03;
-  letter-spacing:.005em;margin:16px 0 20px;color:#fff;text-wrap:balance;overflow-wrap:anywhere;
-  max-width:min(100%,15ch)}
-.ds-hero .lead{font-family:var(--font-mincho);font-size:clamp(16px,2.1vw,21px);line-height:1.95;
-  color:rgba(255,255,255,.82);max-width:min(100%,34em);margin:0 0 30px}
-.ds-hero .actions{display:flex;flex-wrap:wrap;gap:12px}
-/* signature: 縦書き下げ札 (hanging tategaki tag) */
-.ds-tate{position:absolute;top:0;right:clamp(18px,6vw,66px);z-index:1;padding-top:96px;
-  writing-mode:vertical-rl;text-orientation:mixed;font-family:var(--font-mincho);font-size:15px;
-  letter-spacing:.34em;color:rgba(255,255,255,.62)}
-.ds-tate::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
-  width:1px;height:76px;background:linear-gradient(180deg,var(--accent),transparent)}
-.ds-tate::after{content:"";position:absolute;top:74px;left:50%;transform:translateX(-50%);
-  width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px 2px var(--accent)}
+/* hero — full-bleed photo, refined gradient, confident type */
+.hero {
+  position: relative;
+  min-height: min(760px, calc(100svh - 30px));
+  display: grid;
+  align-items: end;
+  padding: clamp(96px, 15vh, 168px) 0 clamp(56px, 9vh, 92px);
+  color: #fff;
+  isolation: isolate;
+  background:
+    linear-gradient(88deg, rgba(10,8,6,.86) 0%, rgba(10,8,6,.6) 42%, rgba(10,8,6,.14) 100%),
+    linear-gradient(0deg, rgba(10,8,6,.7) 0%, rgba(10,8,6,.05) 40%, rgba(10,8,6,.28) 100%),
+    url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1800&q=82") center / cover no-repeat;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(120% 80% at 88% 6%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%);
+  mix-blend-mode: screen;
+}
+.hero::after {
+  content: "";
+  position: absolute; inset: auto 0 0; height: 120px; z-index: -1;
+  background: linear-gradient(0deg, var(--paper), transparent);
+}
+.hero-content { max-width: 820px; }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: rgba(255,255,255,.9);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.eyebrow::before { content: ""; width: 30px; height: 2px; background: var(--accent); }
+h1 {
+  margin: 18px 0 20px;
+  max-width: 14ch;
+  font-family: var(--font-gothic);
+  font-weight: 800;
+  font-size: clamp(46px, 8.4vw, 88px);
+  line-height: 1.02;
+  letter-spacing: .004em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 30px rgba(0,0,0,.3);
+}
+.hero-lead {
+  max-width: 40em;
+  margin: 0;
+  color: rgba(255,255,255,.9);
+  font-family: var(--font-mincho);
+  font-size: clamp(16px, 2.1vw, 22px);
+  line-height: 1.95;
+  font-weight: 500;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.hero-trust {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 26px;
+  color: rgba(255,255,255,.82); font-size: 13px;
+}
+.hero-trust .stars { color: #ffcf6b; letter-spacing: .1em; }
+.hero-trust .dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,.4); }
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 40px;
+  max-width: 720px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(10px);
+}
+.hero-meta div { padding: 16px 20px; background: rgba(10,8,6,.34); min-width: 0; }
+.hero-meta b { display: block; color: #fff; font-size: 14px; font-weight: 700; }
+.hero-meta span { display:block; color: rgba(255,255,255,.68); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 3px; }
 
-/* ---- proof strip (sits under hero, on paper) ---- */
-.ds-proof{background:var(--paper);border-bottom:1px solid var(--line)}
-.ds-proof .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 18px;
-  padding:22px 24px;text-align:center}
-.ds-proof .stars{color:var(--accent);letter-spacing:.16em;font-size:15px}
-.ds-proof .quote{font-family:var(--font-mincho);font-size:17px;color:var(--ink)}
-.ds-proof .src{font-size:12px;color:var(--muted)}
+/* social proof band */
+.proofbar { background: var(--panel); border-bottom: 1px solid var(--line); }
+.proofbar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 20px; padding: 20px 0; text-align: center; }
+.proofbar .stars { color: var(--accent); letter-spacing: .14em; font-size: 15px; }
+.proofbar .quote { font-family: var(--font-mincho); font-size: 17px; color: var(--ink); }
+.proofbar .cite { font-size: 12px; color: var(--muted); }
 
-/* ---- sections ---- */
-.ds-section{padding:clamp(58px,8vw,104px) 0;background:var(--paper)}
-.ds-section--alt{background:var(--panel-2)}
-.ds-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
-/* kanji marker — encodes the section's meaning (選/味/品/席), not a fake sequence */
-.ds-index{flex:none;width:42px;height:42px;display:grid;place-items:center;border-radius:10px;
-  font-family:var(--font-mincho);font-size:20px;font-weight:600;color:var(--accent-ink);
-  background:var(--accent-wash);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line))}
-.ds-label{font-family:var(--font-gothic);font-size:12px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted)}
-.ds-h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(26px,4vw,42px);line-height:1.16;
-  letter-spacing:.01em;color:var(--ink);margin:0;text-wrap:balance;overflow-wrap:anywhere}
-.ds-lead-text{font-family:var(--font-mincho);font-size:clamp(18px,2.3vw,23px);line-height:1.95;
-  color:var(--ink-soft);max-width:34em;margin:0}
+/* sections */
+.section { padding: clamp(66px, 8.5vw, 116px) 0; }
+.section.alt { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 28px;
+  margin-bottom: 34px;
+}
+.section-kicker {
+  display: inline-flex; align-items: center; gap: 9px;
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.section-kicker::before { content: ""; width: 22px; height: 2px; background: var(--accent); }
+h2 {
+  margin: 12px 0 0;
+  font-family: var(--font-gothic);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.16;
+  letter-spacing: .006em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.section-copy { max-width: 540px; color: var(--muted); margin: 0; font-size: 15px; line-height: 1.85; }
 
-/* ---- highlights (選ばれる理由) ---- */
-.ds-highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
-.ds-hl{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
-  box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease}
-.ds-hl:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.ds-hl .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:23px;
-  background:var(--accent-wash);margin-bottom:16px}
-.ds-hl h3{font-family:var(--font-gothic);font-size:17px;font-weight:700;margin:0 0 8px;color:var(--ink)}
-.ds-hl p{margin:0;font-size:14px;color:var(--muted);line-height:1.85}
+/* value cards */
+.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.feature {
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 30px 28px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.feature:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.feature .ic { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font-size: 23px; background: var(--accent-wash); }
+.feature strong { font-family: var(--font-gothic); font-size: 20px; font-weight: 700; line-height: 1.35; }
+.feature p { color: var(--muted); margin: 0; font-size: 14px; line-height: 1.8; }
+.number { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: .18em; }
 
-/* ---- menu (献立: leader-dot list, 人気 badge) ---- */
-.ds-menu{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--panel)}
-.ds-menu-item{display:flex;align-items:center;gap:13px;padding:17px 22px;border-top:1px solid var(--line)}
-.ds-menu-item:first-child{border-top:0}
-.mi-emoji{flex:none;font-size:20px}
-.mi-name{font-family:var(--font-gothic);font-weight:700;font-size:16px;color:var(--ink)}
-.mi-sub{display:block;font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.02em}
-.mi-dot{flex:1 1 auto;min-width:20px;height:.7em;border-bottom:1px dotted color-mix(in srgb,var(--ink) 24%,transparent)}
-.mi-price{flex:none;font-family:var(--font-mincho);font-size:15px;color:var(--accent-ink)}
-.ds-badge{display:inline-block;margin-left:9px;padding:2px 9px;border-radius:999px;font-family:var(--font-gothic);
-  font-size:11px;font-weight:700;letter-spacing:.04em;color:#fff;background:var(--accent);vertical-align:middle}
-.ds-note{font-size:12.5px;color:var(--muted);line-height:1.8;margin-top:18px}
-
-/* ---- access ---- */
-.ds-access{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:4px}
-.ds-info{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:6px 24px}
-.ds-info .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:15px 0;
-  border-bottom:1px solid var(--line)}
-.ds-info .row:last-child{border-bottom:0}
-.ds-info .k{flex:none;color:var(--muted);font-family:var(--font-gothic);font-size:13px;font-weight:700;letter-spacing:.04em}
-.ds-info .tel,.tel{color:var(--accent-ink);font-weight:700}
-.ds-map{background:var(--accent-wash);border:1px dashed color-mix(in srgb,var(--accent) 34%,var(--line));
-  border-radius:var(--radius);display:grid;place-items:center;min-height:220px;color:var(--muted);font-size:14px}
-
-/* ---- CTA band (sumi, bookends the hero) ---- */
-.ds-cta{position:relative;overflow:hidden;background:var(--sumi);color:#fff;border-radius:var(--radius-lg);
-  padding:clamp(34px,6vw,66px)}
-.ds-cta::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(120% 130% at 100% 0%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 55%)}
-.ds-cta>*{position:relative;z-index:1}
-.ds-cta .ds-label{color:rgba(255,255,255,.6)}
-.ds-cta h2{font-family:var(--font-gothic);font-weight:800;font-size:clamp(24px,3.6vw,38px);line-height:1.2;
-  color:#fff;margin:10px 0 14px;text-wrap:balance}
-.ds-cta p{color:rgba(255,255,255,.78);max-width:54em;margin:0}
-.ds-cta .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.ds-reserve-aux{margin-top:18px;font-size:13px;color:rgba(255,255,255,.62)}
-.ds-reserve-aux a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
-
-/* ---- footer (sumi) ---- */
-.ds-footer{background:var(--sumi);color:rgba(255,255,255,.58);padding:40px 0 46px;font-size:12.5px;line-height:1.9}
-.ds-footer .wrap{display:grid;gap:12px}
-.ds-footer .disc{max-width:72em}
-.ds-footer b{color:rgba(255,255,255,.85);font-weight:600}
-.ds-footer a{color:#fff;border-bottom:1px solid var(--accent);padding-bottom:1px}
-
-/* ---- gallery (index) ---- */
-.ds-gal{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.ds-gal a{display:flex;flex-direction:column;gap:7px;padding:26px 24px;background:var(--panel);
-  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);
-  transition:transform .18s ease,box-shadow .18s ease}
-.ds-gal a:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.ds-gal .em{font-size:26px}
-.ds-gal .nm{font-family:var(--font-gothic);font-weight:800;font-size:18px;line-height:1.35;color:var(--ink)}
-.ds-gal .sb{font-size:13px;color:var(--muted)}
-
-/* ---- sticky mobile action bar ---- */
-.ds-actionbar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;
-  width:min(560px,calc(100% - 24px));display:none;gap:8px;padding:8px;border-radius:14px;
-  background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(14px);
-  border:1px solid var(--line);box-shadow:var(--shadow)}
-.ds-actionbar .ds-btn{flex:1;min-height:48px}
-
-/* ---- motion: restrained hero entrance; hover lifts above; reduced-motion respected ---- */
-@media (prefers-reduced-motion:no-preference){
-  .ds-hero .wrap>*{animation:dsRise .72s cubic-bezier(.2,.7,.2,1) both}
-  .ds-hero .mark{animation-delay:.02s}
-  .ds-hero .eyebrow{animation-delay:.08s}
-  .ds-hero h1{animation-delay:.15s}
-  .ds-hero .lead{animation-delay:.24s}
-  .ds-hero .actions{animation-delay:.32s}
-  @keyframes dsRise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+/* story */
+.story { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(30px, 6vw, 76px); align-items: center; }
+.story-text h2 { margin-top: 14px; }
+.story-text p { color: var(--muted); font-size: 16px; line-height: 1.95; margin: 18px 0 0; }
+.story-visual {
+  position: relative;
+  min-height: 460px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(10,8,6,.04), rgba(10,8,6,.24)), url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1800&q=82") center / cover no-repeat;
+  box-shadow: var(--shadow-lg);
+}
+.story-visual::after {
+  content: ""; position: absolute; inset: 0; border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14); pointer-events: none;
 }
 
-/* ---- responsive ---- */
-@media (max-width:860px){
-  body{overflow-x:hidden;padding-bottom:82px}
-  .wrap{padding:0 18px}
-  .ds-tate{display:none}
-  .ds-header .wrap{height:56px;gap:10px}
-  .ds-nav{display:none}
-  .ds-header .ds-btn{display:none}       /* nav+CTA collapse; actionbar carries conversion */
-  .ds-brand{flex:1;font-size:16px}
-  .ds-hero h1{word-break:break-word}
-  .ds-highlights,.ds-access,.ds-gal{grid-template-columns:1fr}
-  .ds-menu-item{flex-wrap:wrap}
-  .ds-menu-item .mi-dot{display:none}
-  .ds-actionbar{display:flex}
+/* menu */
+.menu-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.menu-item {
+  position: relative;
+  min-height: 150px;
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.menu-item b { font-family: var(--font-gothic); font-size: 18px; font-weight: 700; line-height: 1.35; }
+.menu-item span { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.menu-item .badge {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  letter-spacing: .04em; border-radius: 999px; padding: 3px 10px;
 }
 
-:root{--accent:#0f766e;--accent-ink:#0b5a53;--accent-wash:color-mix(in srgb,#0f766e 9%,transparent)}
+/* deliverables checklist */
+.deliver-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; }
+.deliver-item { display: flex; gap: 13px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.deliver-item .ck { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: 14px; margin-top: 1px; }
+.deliver-item b { font-family: var(--font-gothic); font-weight: 700; font-size: 15px; }
+.deliver-item p { margin: 3px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+/* reserve / visit */
+.reserve { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 24px; align-items: stretch; }
+.reserve-panel {
+  position: relative; overflow: hidden;
+  padding: clamp(30px, 5vw, 58px);
+  border-radius: 18px;
+  background: var(--sumi);
+  color: #fff;
+}
+.reserve-panel::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 130% at 100% 0%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%); }
+.reserve-panel > * { position: relative; z-index: 1; }
+.reserve-panel h2 { color: #fff; }
+.reserve-panel p { color: rgba(255,255,255,.74); max-width: 660px; margin: 14px 0 0; }
+.reserve-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.info-card {
+  padding: 30px 28px;
+  border-radius: 18px;
+  background: var(--accent-wash);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+}
+.info-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--line));
+  font-size: 14px;
+}
+.info-row:last-child { border-bottom: 0; }
+.info-row b { color: var(--accent-ink); font-weight: 700; }
+.note { color: var(--muted); font-size: 12px; margin-top: 20px; line-height: 1.8; }
+.note a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+/* footer */
+.footer { background: var(--sumi); color: rgba(255,255,255,.58); padding: 42px 0 96px; font-size: 12.5px; line-height: 1.9; }
+.footer .wrap { display: grid; gap: 10px; }
+.footer b { color: rgba(255,255,255,.85); font-weight: 600; }
+.footer a { color: #fff; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+
+/* sticky mobile action bar */
+.actionbar {
+  position: fixed; z-index: 40; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: min(560px, calc(100% - 24px));
+  display: none; gap: 8px; padding: 8px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+.actionbar .btn { flex: 1; }
+
+/* motion — reveal on scroll (opt-in via JS + reduced-motion aware) */
+@media (prefers-reduced-motion: no-preference) {
+  .js-anim .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .js-anim .reveal.in { opacity: 1; transform: none; }
+  .hero .hero-content > * { animation: heroRise .8s cubic-bezier(.2,.7,.2,1) both; }
+  .hero .eyebrow { animation-delay: .05s; }
+  .hero h1 { animation-delay: .14s; }
+  .hero-lead { animation-delay: .24s; }
+  .hero-actions { animation-delay: .32s; }
+  .hero-trust, .hero-meta { animation-delay: .4s; }
+  @keyframes heroRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+}
+
+@media (max-width: 860px) {
+  body { overflow-x: hidden; padding-bottom: 82px; }
+  .wrap { width: min(100% - 30px, 1160px); }
+  .proposal-strip { font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }
+  .site-header .wrap { min-height: 58px; gap: 10px; }
+  .brand { flex: 1; font-size: 15px; }
+  .nav { display: none; }
+  .brand small { display: none; }
+  .hero { min-height: 660px; padding: 88px 0 44px; }
+  .hero-content { min-width: 0; max-width: 100%; }
+  h1 { max-width: 100%; font-size: clamp(38px, 11vw, 56px); line-height: 1.06; overflow-wrap: anywhere; }
+  h2 { overflow-wrap: anywhere; }
+  .hero-lead { font-size: 16px; line-height: 1.85; overflow-wrap: anywhere; }
+  .hero-meta { grid-template-columns: 1fr; margin-top: 30px; }
+  .section-head { display: block; }
+  .section-copy { margin-top: 16px; }
+  .feature-grid, .menu-grid, .story, .reserve, .deliver-grid { grid-template-columns: 1fr; }
+  .story-visual { min-height: 300px; order: -1; }
+  .reserve { gap: 14px; }
+  .actionbar { display: flex; }
+}
+
 </style>
 </head>
 <body>
-<div class="ds-demo-bar">これは <b>コエテク合同会社</b> による<b>リニューアル提案デモ</b>です。実在の Tempura Yoshikawa (iK) 様の公式サイトではありません（料金は発生しません）。</div>
+<div class="proposal-strip"><div class="wrap">これは <b>コエテク合同会社</b> によるWebリニューアル提案LPです。実在の Tempura Yoshikawa (iK) 様の公式サイトではありません（料金は発生しません）。</div></div>
 
-<header class="ds-header"><div class="wrap">
-  <div class="ds-brand"><span class="mk">🍴</span>Tempura Yoshikawa (iK)</div>
-  <div class="ds-nav-wrap">
-    <nav class="ds-nav"><a href="#reasons">選ばれる理由</a><a href="#menu">お品書き</a><a href="#access">アクセス</a></nav>
-    <a class="ds-btn ds-btn--fill" href="#contact">ご予約</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top"><span>Tempura Yoshikawa (iK)</span><small>京都市 / レストラン</small></a>
+    <nav class="nav">
+      <a href="#design">改善案</a>
+      <a href="#story">コンセプト</a>
+      <a href="#menu">お品書き</a>
+      <a href="#visit">アクセス</a>
+      <a class="btn btn-primary" href="#contact">無料相談</a>
+    </nav>
   </div>
-</div></header>
+</header>
 
-<section class="ds-hero"><div class="wrap">
-  <span class="ds-tate" aria-hidden="true">京都市　レストラン</span>
-  <div class="mark">🍴</div>
-  <span class="eyebrow">京都市 ／ レストラン</span>
-  <h1>Tempura Yoshikawa (iK)</h1>
-  <p class="lead">素材を活かした、一皿を。<br>地元で愛される味を、ていねいにお出ししています。</p>
-  <div class="actions">
-    <a class="ds-btn ds-btn--fill" href="#contact">ご予約・お問い合わせ</a>
-    <a class="ds-btn ds-btn--ghost" href="#menu">お品書きを見る</a>
-  </div>
-</div></section>
-
-<div class="ds-proof"><div class="wrap">
-  <span class="stars">★★★★★</span>
-  <span class="quote">「また来たくなる、京都市の一軒。」</span>
-  <span class="src">— お客様の声（実装イメージ。実サイトではGoogle口コミ等を掲載）</span>
-</div></div>
-
-<section class="ds-section" id="reasons"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">選</span><span class="ds-label">Why us</span></div>
-  <h2 class="ds-h2" style="margin-bottom:.7em">選ばれる理由</h2>
-  <div class="ds-highlights">
-      <div class="ds-hl"><div class="ic">🍴</div><h3>こだわりのレストラン</h3><p>素材と手仕事を大切に、ていねいに仕上げます。</p></div>
-      <div class="ds-hl"><div class="ic">🪑</div><h3>落ち着いた店内で</h3><p>京都市で、ゆっくりとお過ごしいただけます。</p></div>
-      <div class="ds-hl"><div class="ic">📅</div><h3>かんたんご予約</h3><p>お電話・オンラインからスムーズにご予約いただけます。</p></div>
-  </div>
-</div></section>
-
-<section class="ds-section ds-section--alt" id="concept"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">味</span><span class="ds-label">Concept</span></div>
-  <h2 class="ds-h2" style="margin-bottom:.5em">こだわり</h2>
-  <p class="ds-lead-text">地元で愛される味を、ていねいにお出ししています。<br><span style="color:var(--muted);font-size:14px">※本デモの紹介文はジャンルに合わせた構成サンプルです。実制作では貴店の歴史・看板メニュー・写真を反映します。</span></p>
-</div></section>
-
-<section class="ds-section" id="menu"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">品</span><span class="ds-label">Menu</span></div>
-  <h2 class="ds-h2" style="margin-bottom:.6em">お品書き</h2>
-  <div class="ds-menu">
-      <div class="ds-menu-item">
-        <span class="mi-emoji">🍴</span>
-        <span><span class="mi-name">おすすめ料理<span class="ds-badge">人気</span></span><span class="mi-sub">サンプル表示</span></span>
-        <span class="mi-dot"></span>
-        <span class="mi-price">¥—</span>
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-content">
+        <span class="eyebrow">京都市 ／ レストラン</span>
+        <h1>Tempura Yoshikawa (iK)</h1>
+        <p class="hero-lead">素材を活かした、一皿を。<br>地元で愛される味を、ていねいにお出ししています。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">無料でリニューアル相談</a>
+          <a class="btn btn-ghost" href="#menu">お品書きを見る</a>
+        </div>
+        <div class="hero-trust">
+          <span class="stars">★★★★★</span>
+          <span>「また来たくなる」を、Webの第一印象から。</span>
+          <span class="dot"></span>
+          <span>初回提案・お見積りは無料</span>
+        </div>
+        <div class="hero-meta" aria-label="店舗情報">
+          <div><span>Area</span><b>京都市</b></div>
+          <div><span>Genre</span><b>レストラン</b></div>
+          <div><span>Tel</span><b>制作時に反映</b></div>
+        </div>
       </div>
-      <div class="ds-menu-item">
-        <span class="mi-emoji">🍴</span>
-        <span><span class="mi-name">本日の一品</span><span class="mi-sub">サンプル表示</span></span>
-        <span class="mi-dot"></span>
-        <span class="mi-price">¥—</span>
-      </div>
-      <div class="ds-menu-item">
-        <span class="mi-emoji">🍴</span>
-        <span><span class="mi-name">おまかせコース</span><span class="mi-sub">サンプル表示</span></span>
-        <span class="mi-dot"></span>
-        <span class="mi-price">¥—</span>
-      </div>
-  </div>
-  <p class="ds-note">※メニュー名・価格は提案用のサンプル表示です。実データ（実メニュー・写真・価格）を反映して正式版を制作します。</p>
-</div></section>
-
-<section class="ds-section ds-section--alt" id="access"><div class="wrap">
-  <div class="ds-head"><span class="ds-index">席</span><span class="ds-label">Access</span></div>
-  <h2 class="ds-h2" style="margin-bottom:.7em">アクセス・ご利用案内</h2>
-  <div class="ds-access">
-    <div class="ds-info">
-      <div class="row"><span class="k">エリア</span><span>京都市</span></div>
-      <div class="row"><span class="k">ジャンル</span><span>レストラン</span></div>
-      <div class="row"><span class="k">電話</span><span style="color:var(--muted)">提案後にご案内</span></div>
-      <div class="row"><span class="k">営業時間</span><span style="color:var(--muted)">提案後に実データを反映</span></div>
     </div>
-    <div class="ds-map">📍 地図はこの位置に表示されます</div>
-  </div>
-</div></section>
+  </section>
 
-<section class="ds-section" id="contact"><div class="wrap">
-  <div class="ds-cta">
-    <span class="ds-label">Renewal Proposal</span>
-    <h2>このデザインで、正式サイトを無料でご提案します</h2>
-    <p>スマホ対応・表示速度・予約/通販導線・常時SSLを備えた構成案です。実データを反映したお見積り・正式提案をご案内します。</p>
-    <div class="actions">
-      <a class="ds-btn ds-btn--fill" href="https://timerex.net/s/ryutarote_5007/d6cb0d61">お打ち合わせを予約する</a>
-      <a class="ds-btn ds-btn--ghost" href="mailto:support@koetech.jp">メールで問い合わせ</a>
+  <div class="proofbar">
+    <div class="wrap">
+      <span class="stars">★★★★★</span>
+      <span class="quote">「スマホで見やすく、予約もすぐできる」</span>
+      <span class="cite">— 実装イメージ（実サイトではGoogle口コミ等を掲載）</span>
     </div>
-    <div class="ds-reserve-aux">ご予約・お問い合わせはお気軽に</div>
   </div>
-</div></section>
 
-<footer class="ds-footer"><div class="wrap">
-  <div class="disc">※本ページは コエテク合同会社 が公開情報をもとに独自に制作した<b>リニューアル提案サンプル</b>です。掲載情報は参考値で、Tempura Yoshikawa (iK) 様の公式サイトではありません。料金は一切発生しません。</div>
-  <div>コエテク合同会社　Mail: support@koetech.jp　／　制作実績: <a href="https://ryutarote.github.io/web-renewal-studio/">https://ryutarote.github.io/web-renewal-studio/</a></div>
-</div></footer>
+  <section class="section" id="design">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Renewal Design</div>
+          <h2>来店前の期待感を、予約行動につなげる。</h2>
+        </div>
+        <p class="section-copy">スマホで見た瞬間に「どんな店か」「何を食べられるか」「どう予約するか」が伝わるよう、ファーストビューからCTAまでを設計します。</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature reveal">
+          <div class="ic">🍽️</div>
+          <strong>レストランらしさを一目で伝える</strong>
+          <p>初見でも料理・雰囲気・価格帯が伝わるファーストビューで、検索後の離脱を抑えます。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="ic">📱</div>
+          <strong>予約と来店導線を近くに</strong>
+          <p>電話・Web予約・地図を、スマホでも迷わず押せる位置に。来店直前の行動を後押しします。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="ic">🔄</div>
+          <strong>更新しやすい運用設計</strong>
+          <p>メニュー・営業時間・臨時休業を、店舗側で無理なく更新できる形に整えます。</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<div class="ds-actionbar">
-  <a class="ds-btn ds-btn--line" href="mailto:support@koetech.jp">メール</a>
-  <a class="ds-btn ds-btn--fill" href="#contact">ご予約・お問い合わせ</a>
+  <section class="section alt" id="story">
+    <div class="wrap story">
+      <div class="story-text">
+        <div class="section-kicker">Concept</div>
+        <h2>素材を活かした、一皿を。</h2>
+        <p>地元で愛される味を、ていねいにお出ししています。</p>
+        <p>正式制作では、店内写真・看板メニュー・店主の想い・Googleビジネスの情報を反映し、検索から来店までの流れを自然につくります。</p>
+      </div>
+      <div class="story-visual reveal" aria-label="店舗イメージ"></div>
+    </div>
+  </section>
+
+  <section class="section" id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Menu</div>
+          <h2>看板メニューを、迷わず選べる見せ方に。</h2>
+        </div>
+        <p class="section-copy">料理写真と説明文を組み合わせ、初めてのお客様にもおすすめが伝わるメニュー導線を用意します。</p>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-item reveal">
+          <span class="badge">人気</span>
+          <b>おすすめ料理</b>
+          <span>実制作では写真・価格・説明文を貴店データに差し替えます</span>
+        </article>
+        <article class="menu-item reveal">
+          
+          <b>本日の一品</b>
+          <span>実制作では写真・価格・説明文を貴店データに差し替えます</span>
+        </article>
+        <article class="menu-item reveal">
+          
+          <b>おまかせコース</b>
+          <span>実制作では写真・価格・説明文を貴店データに差し替えます</span>
+        </article>
+      </div>
+      <p class="note">掲載メニューは提案用のサンプル表示です。正式版では実メニュー・価格・写真に差し替えます。</p>
+    </div>
+  </section>
+
+  <section class="section alt" id="deliver">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">What's included</div>
+          <h2>この提案に含まれる内容。</h2>
+        </div>
+        <p class="section-copy">見た目だけでなく、来店・予約という成果につながる要素を一式でご提案します。</p>
+      </div>
+      <div class="deliver-grid">
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>スマホ最適化・高速表示</b><p>モバイル前提のレイアウトと軽量化で、待たせない表示に。</p></div>
+        </div>
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>予約・電話・地図の導線設計</b><p>来店に直結するアクションを、目立つ位置に集約。</p></div>
+        </div>
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>常時SSL・安全な配信</b><p>鍵マーク付きで、ブラウザの警告が出ない安心の構成。</p></div>
+        </div>
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>Googleビジネス・地図連携</b><p>検索から地図・来店までの流れを自然につなぎます。</p></div>
+        </div>
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>写真とメニューの見せ方設計</b><p>看板メニューが伝わる構成・順序に整えます。</p></div>
+        </div>
+        <div class="deliver-item reveal">
+          <span class="ck" aria-hidden="true">✓</span>
+          <div><b>更新しやすい運用設計</b><p>公開後もお店側で無理なく手を入れられる形に。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit">
+    <div class="wrap reserve">
+      <div class="reserve-panel">
+        <div class="section-kicker">Visit</div>
+        <h2>予約・問い合わせ・地図を、ひとつの流れに。</h2>
+        <p>スマートフォンでの閲覧を前提に、来店直前のお客様が必要とする情報を、下部CTAと店舗情報に集約します。</p>
+        <div class="reserve-actions">
+          <a class="btn btn-primary" href="https://timerex.net/s/ryutarote_5007/d4ad211b">打ち合わせを予約</a>
+          <a class="btn btn-outline" href="mailto:support@koetech.jp">メールする</a>
+        </div>
+      </div>
+      <aside class="info-card" aria-label="店舗情報">
+        <div class="info-row"><b>店舗</b><span>Tempura Yoshikawa (iK)</span></div>
+        <div class="info-row"><b>エリア</b><span>京都市</span></div>
+        <div class="info-row"><b>ジャンル</b><span>レストラン</span></div>
+        <div class="info-row"><b>電話</b><span>正式制作時に反映</span></div>
+        <div class="info-row"><b>改善点</b><span>非SSL（http）＝ブラウザ警告・信頼性低下</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section alt" id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Renewal Proposal</div>
+          <h2>この方向性で、正式サイトを無料でご提案します。</h2>
+        </div>
+        <p class="section-copy">写真・営業時間・実メニューを反映したうえで、公開までの作業範囲と費用感をご案内します。料金は一切発生しません。</p>
+      </div>
+      <div class="reserve-actions">
+        <a class="btn btn-primary" href="https://timerex.net/s/ryutarote_5007/d4ad211b">無料相談を予約する</a>
+        <a class="btn btn-outline" href="mailto:support@koetech.jp">メールで相談する</a>
+      </div>
+      <p class="note">コエテク合同会社 ／ <a href="mailto:support@koetech.jp">support@koetech.jp</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div>本ページは <b>コエテク合同会社</b> が公開情報をもとに制作した<b>リニューアル提案サンプル</b>です。Tempura Yoshikawa (iK) 様の公式サイトではありません。掲載情報は参考値で、料金は一切発生しません。</div>
+    <div>制作元: コエテク合同会社 ／ 制作実績: <a href="https://ryutarote.github.io/web-renewal-studio/">https://ryutarote.github.io/web-renewal-studio/</a></div>
+  </div>
+</footer>
+
+<div class="actionbar" aria-label="固定アクション">
+  <a class="btn btn-outline" href="mailto:support@koetech.jp">メール</a>
+  <a class="btn btn-primary" href="#contact">無料相談</a>
 </div>
+
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.body.classList.add("js-anim");
+  var els = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window)) { els.forEach(function(e){ e.classList.add("in"); }); return; }
+  var io = new IntersectionObserver(function(en){
+    en.forEach(function(x){ if (x.isIntersecting){ x.target.classList.add("in"); io.unobserve(x.target); } });
+  }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
 </body>
 </html>
